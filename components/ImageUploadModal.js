@@ -55,7 +55,7 @@ export default function ImageUploadModal({
       redirect: 'follow',
     };
     if (data) {
-      fetch(`https://insurecuebotbot.techforce.ai/api/aws/upload`, {
+      fetch(`https://ocr.techforce.ai/api/aws/upload`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ export default function ImageUploadModal({
       })
         .then((url) => {
           url.json().then((res) => {
-            if (res?.url) {
+            if (res) {
               // setUploadImageURL()
               fetch(
                 'https://insurecueocr.techforce.ai/api/operator_roi/InsureCue_Extract_Data',
