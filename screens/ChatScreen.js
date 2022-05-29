@@ -45,7 +45,6 @@ const ChatScreen = (props) => {
   const [DrivingBack, setDrivingBack] = React.useState('');
   const [VehicleFront, setVehicalFront] = React.useState('');
   const [VehicleBack, setVehicalBack] = React.useState('');
-  console.log(VehicleBack, VehicleFront, 'VehicleFront data');
   const [isModal, setIsModal] = React.useState(false);
   const [EmiratesFront, setEmiratesFront] = React.useState('');
   const [EmiratesBack, setEmiratesBack] = React.useState('');
@@ -94,7 +93,7 @@ const ChatScreen = (props) => {
   const [isPhone, setPhone] = React.useState('');
   const [isEmail, setEmail] = React.useState('');
   const [isUserData, setIsUserData] = React.useState(false);
-
+  console.log(VehicleFront, 'vech daya');
   const scrollViewRef = useRef();
 
   async function setAsyncData() {
@@ -248,7 +247,7 @@ const ChatScreen = (props) => {
 
   function getYear() {
     if (VehicleFront !== '') {
-      let date = parseFields(VehicleFront.Output[0].data, 'ins_exp');
+      let date = parseFields(VehicleFront?.Output[0]?.data, 'ins_exp');
       console.log('this is date ====', date);
       if (date !== '') {
         let s = date.split('-');
@@ -301,8 +300,8 @@ const ChatScreen = (props) => {
   //   var raw = JSON.stringify({
   //     "data":[
   //       {
-  //         "chassis_number":vehicleBack.ChasisNumber,
-  //         "year":vehicleBack.ModelNumber
+  //         "chassis_number":vehicleBack?.ChasisNumber,
+  //         "year":vehicleBack?.ModelNumber
   //       }
   //     ]
   //   });
@@ -320,9 +319,9 @@ const ChatScreen = (props) => {
   //   axios(config)
   //     .then(function (response) {
   //       console.log('this data  for chasis no vehicle type ',(response.data.Output.vehicle_type).toLowerCase().trim());
-  //       console.log('this data  for  vehicle type ',vehicleBack.VehicleType.toLowerCase().trim());
-  //       console.log('this data  for  vehicle type ',typeof((response.data.Output.vehicle_type).toLowerCase().trim() === vehicleBack.VehicleType.toLowerCase().trim()));
-  //       if((response.data.Output.vehicle_type).toLowerCase().trim() === vehicleBack.VehicleType.toLowerCase().trim()){
+  //       console.log('this data  for  vehicle type ',vehicleBack?.VehicleType.toLowerCase().trim());
+  //       console.log('this data  for  vehicle type ',typeof((response.data.Output.vehicle_type).toLowerCase().trim() === vehicleBack?.VehicleType.toLowerCase().trim()));
+  //       if((response.data.Output.vehicle_type).toLowerCase().trim() === vehicleBack?.VehicleType.toLowerCase().trim()){
   //         setIsValidVehicleBack(true);
   //       }else{
   //         alert("Vehicle Type and Chasis Number doesn't match");
@@ -332,7 +331,10 @@ const ChatScreen = (props) => {
   //       console.log(error);
   //     });
   // }
-
+  console.log(
+    'This is vehicle frontdtttttttttttttttttttttttttttttttttttttttttttttttdd',
+    vehicleFront,
+  );
   async function handleData(e) {
     if (e == 'vehicleFront') {
       let vehicleFrontData = {
@@ -340,74 +342,75 @@ const ChatScreen = (props) => {
           plateNo !== ''
             ? plateNo
             : VehicleFront
-            ? parseFields(VehicleFront.Output[0].data, 'plate_no')
+            ? parseFields(VehicleFront?.Output[0]?.data, 'plate_no')
             : '',
         Nationality:
           nationality != ''
             ? nationality
             : VehicleFront
-            ? parseFields(VehicleFront.Output[0].data, 'nationality')
+            ? parseFields(VehicleFront?.Output[0]?.data, 'nationality')
             : '',
         ExpiryDate:
           expiryDate !== ''
             ? expiryDate
             : VehicleFront
-            ? parseFields(VehicleFront.Output[0].data, 'exp_date')
+            ? parseFields(VehicleFront?.Output[0]?.data, 'exp_date')
             : '',
         InsuranceExp:
           InsuranceExpData !== ''
             ? InsuranceExpData
             : VehicleFront
-            ? parseFields(VehicleFront.Output[0].data, 'ins_exp')
+            ? parseFields(VehicleFront?.Output[0]?.data, 'ins_exp')
             : '',
         PolicyNumber:
           policyno !== ''
             ? policyno
             : VehicleFront
-            ? parseFields(VehicleFront.Output[0].data, 'policy_no')
+            ? parseFields(VehicleFront?.Output[0]?.data, 'policy_no')
             : '',
         RegistrationDate:
           registrationDate !== ''
             ? registrationDate
             : VehicleFront
-            ? parseFields(VehicleFront.Output[0].data, 'reg_date')
+            ? parseFields(VehicleFront?.Output[0]?.data, 'reg_date')
             : '',
 
         Owner:
           ownerName !== ''
             ? ownerName
             : VehicleFront
-            ? parseFields(VehicleFront.Output[0].data, 'owner')
+            ? parseFields(VehicleFront?.Output[0]?.data, 'owner')
             : '',
         TCNo:
           t_c_no !== ''
             ? t_c_no
             : VehicleFront
-            ? parseFields(VehicleFront.Output[0].data, 't_c_no')
+            ? parseFields(VehicleFront?.Output[0]?.data, 't_c_no')
             : '',
         InsuranceType: vehicleInsuranceType !== '' ? vehicleInsuranceType : '',
         PlaceOfIssue: VehicleFront
-          ? parseFields(VehicleFront.Output[0].data, 'place_of_issue')
+          ? parseFields(VehicleFront?.Output[0]?.data, 'place_of_issue')
           : '',
 
         Mortgage: VehicleFront
-          ? parseFields(VehicleFront.Output[0].data, 'mortgage')
+          ? parseFields(VehicleFront?.Output[0]?.data, 'mortgage')
           : '',
         Private: VehicleFront
-          ? parseFields(VehicleFront.Output[0].data, 'private')
+          ? parseFields(VehicleFront?.Output[0]?.data, 'private')
           : '',
         VehicleType: VehicleFront
-          ? parseFields(VehicleFront.Output[0].data, 'vehicle_type')
+          ? parseFields(VehicleFront?.Output[0]?.data, 'vehicle_type')
           : '',
       };
 
       if (
         (plateNo !== '' ||
-          parseFields(VehicleFront.Output[0].data, 'plate_no') !== '') &&
+          parseFields(VehicleFront?.Output[0]?.data, 'plate_no') !== '') &&
         (policyno !== '' ||
-          parseFields(VehicleFront.Output[0].data, 'policy_no') !== '') &&
+          parseFields(VehicleFront?.Output[0]?.data, 'policy_no') !== '') &&
         vehicleInsuranceType !== ''
       ) {
+        console.log('Helllo');
         await AsyncStorage.setItem(
           'VEhicleFront',
           JSON.stringify(vehicleFrontData),
@@ -417,14 +420,35 @@ const ChatScreen = (props) => {
         let expdate =
           registrationDate !== ''
             ? registrationDate.slice(6, 10)
-            : VehicleFront?.Output[0].data[6].fieldValue.slice(6, 10);
+            : VehicleFront?.Output[0]?.data[6]?.fieldValue.slice(6, 10);
         console.log(expdate, 'expdate');
         setregistrationDate(expdate);
+        fetch(
+          `https://insurecueapi.techforce.ai/insurecue/updateInsureStaging`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Api-Key': '3PeZr8Hc1gFbVI2nUe9dT',
+              'Partner-Id': 'DOWALI',
+            },
+            body: JSON.stringify({
+              vehicleFrontData,
+            }),
+          },
+        )
+          .then((res) => {
+            console.logg('This is responce from front updation', res);
+            // alert("uploaded ")
+          })
+          .catch((e) => {
+            // alert("errror")
+          });
         setIsModal(false);
       } else {
-        // alert(
-        //   'Plate Number,Policy Number and Previous Insurance Type is required',
-        // );
+        alert(
+          'Plate Number,Policy Number and Previous Insurance Type is required',
+        );
       }
     }
     if (e == 'vehicleBack') {
@@ -434,48 +458,48 @@ const ChatScreen = (props) => {
           modelNo !== ''
             ? modelNo
             : VehicleBack
-            ? parseFields(VehicleBack.Output[0].data, 'model')
+            ? parseFields(VehicleBack?.Output[0]?.data, 'model')
             : '',
         Origin:
           countryOrigin != ''
             ? countryOrigin
             : VehicleBack
-            ? parseFields(VehicleBack.Output[0].data, 'origin')
+            ? parseFields(VehicleBack?.Output[0]?.data, 'origin')
             : '',
         BodyType:
           bodyType !== ''
             ? bodyType
             : VehicleBack
-            ? parseFields(VehicleBack.Output[0].data, 'origin1')
+            ? parseFields(VehicleBack?.Output[0]?.data, 'origin1')
             : '',
         VehicleType:
           vehicletype !== ''
             ? vehicletype
             : VehicleBack
-            ? parseFields(VehicleBack.Output[0].data, 'vehicle_type')
+            ? parseFields(VehicleBack?.Output[0]?.data, 'vehicle_type')
             : '',
         EngineNumber:
           engineNo !== ''
             ? engineNo
             : VehicleBack
-            ? parseFields(VehicleBack.Output[0].data, 'engine_no')
+            ? parseFields(VehicleBack?.Output[0]?.data, 'engine_no')
             : '',
         ChasisNumber:
           chasisNo !== ''
             ? chasisNo
             : VehicleBack
-            ? parseFields(VehicleBack.Output[0].data, 'chassis_no')
+            ? parseFields(VehicleBack?.Output[0]?.data, 'chassis_no')
             : '',
         NumberOfPassenger: VehicleBack
-          ? parseFields(VehicleBack.Output[0].data, 'number_of_pass')
+          ? parseFields(VehicleBack?.Output[0]?.data, 'number_of_pass')
           : '',
       };
 
       if (
         (bodyType !== '' ||
-          parseFields(VehicleBack.Output[0].data, 'origin1') !== '') &&
+          parseFields(VehicleBack?.Output[0]?.data, 'origin1') !== '') &&
         (vehicletype !== '' ||
-          parseFields(VehicleBack.Output[0].data, 'vehicle_type') !== '')
+          parseFields(VehicleBack?.Output[0]?.data, 'vehicle_type') !== '')
       ) {
         await AsyncStorage.setItem(
           'VEhicleBack',
@@ -496,22 +520,22 @@ const ChatScreen = (props) => {
           licenceNo !== ''
             ? licenceNo
             : DrivingFront
-            ? parseFields(DrivingFront.Output[0].data, 'license_no')
+            ? parseFields(DrivingFront?.Output[0]?.data, 'license_no')
             : '',
         DOB:
           Dob !== ''
             ? Dob
             : DrivingFront
-            ? parseFields(DrivingFront.Output[0].data, 'date of birth')
+            ? parseFields(DrivingFront?.Output[0]?.data, 'date of birth')
             : '',
         Name:
           vehicleName !== ''
             ? vehicleName
             : DrivingFront
-            ? parseFields(DrivingFront.Output[0].data, 'name')
+            ? parseFields(DrivingFront?.Output[0]?.data, 'name')
             : '',
         DriverNationality: DrivingFront
-          ? parseFields(DrivingFront.Output[0].data, 'nationality')
+          ? parseFields(DrivingFront?.Output[0]?.data, 'nationality')
           : '',
         PlaceOfIssue: DrivingFront
           ? parseFields(DrivingFront.Output[0].data, 'place of issue')
@@ -520,21 +544,21 @@ const ChatScreen = (props) => {
           drivingIssueDate !== ''
             ? drivingIssueDate
             : DrivingFront
-            ? parseFields(DrivingFront.Output[0].data, 'issue date')
+            ? parseFields(DrivingFront?.Output[0]?.data, 'issue date')
             : '',
         ExpiryDate:
           drivingExpiryDate !== ''
             ? drivingExpiryDate
             : DrivingFront
-            ? parseFields(DrivingFront.Output[0].data, 'exp date')
+            ? parseFields(DrivingFront?.Output[0]?.data, 'exp date')
             : '',
       };
 
       if (
         (vehicleName !== '' ||
-          parseFields(DrivingFront.Output[0].data, 'name') !== '') &&
+          parseFields(DrivingFront?.Output[0]?.data, 'name') !== '') &&
         (drivingExpiryDate !== '' ||
-          parseFields(DrivingFront.Output[0].data, 'exp date') !== '')
+          parseFields(DrivingFront?.Output[0]?.data, 'exp date') !== '')
       ) {
         await AsyncStorage.setItem(
           'drivingFront',
@@ -545,19 +569,19 @@ const ChatScreen = (props) => {
           drivingExpiryDate !== ''
             ? drivingExpiryDate
             : DrivingFront
-            ? parseFields(DrivingFront.Output[0].data, 'exp date')
+            ? parseFields(DrivingFront?.Output[0]?.data, 'exp date')
             : '',
         );
         checkNameValidation(
           vehicleName !== ''
             ? vehicleName
             : DrivingFront
-            ? parseFields(DrivingFront.Output[0].data, 'name')
+            ? parseFields(DrivingFront?.Output[0]?.data, 'name')
             : '',
           ownerName !== ''
             ? ownerName
             : VehicleFront
-            ? parseFields(VehicleFront.Output[0].data, 'owner')
+            ? parseFields(VehicleFront?.Output[0]?.data, 'owner')
             : '',
         );
 
@@ -590,7 +614,7 @@ const ChatScreen = (props) => {
     console.log('this is month ', exp.getMonth());
     if (exp.getTime() < today.getTime()) {
       setIsDrivingLicenseExpired(true);
-      alert('Driving License is expired');
+      // alert('Driving License is expired');
     } else {
       setIsDrivingLicenseExpired(false);
     }
@@ -647,8 +671,8 @@ const ChatScreen = (props) => {
   function parseFields(data, field) {
     let itemValue = '';
     data.forEach(function (item) {
-      if (item.fieldName == field) {
-        itemValue = item.fieldValue;
+      if (item?.fieldName == field) {
+        itemValue = item?.fieldValue;
       }
     });
     return itemValue;
@@ -661,8 +685,8 @@ const ChatScreen = (props) => {
     var raw = JSON.stringify({
       data: [
         {
-          chassis_number: vehicleBack.ChasisNumber,
-          year: vehicleBack.ModelNumber,
+          chassis_number: vehicleBack?.ChasisNumber,
+          year: vehicleBack?.ModelNumber,
         },
       ],
     });
@@ -700,7 +724,7 @@ const ChatScreen = (props) => {
             {
               model: response.data.Output.vehicle_type,
               trim: 'other',
-              year: vehicleBack.ModelNumber,
+              year: vehicleBack?.ModelNumber,
               mileage: '',
               reg: 'GCC Specs',
             },
@@ -902,7 +926,7 @@ const ChatScreen = (props) => {
       Email_ID: loginData.email,
       Phone_No: loginData.phone,
       Company_Name: '',
-      Policy_No: parseFields(VehicleFront.Output[0].data, 'policy_no'),
+      Policy_No: parseFields(VehicleFront?.Output[0]?.data, 'policy_no'),
       Partner_ID: '',
       P_Start_Date: (planName = 'Plan 1'
         ? awnicRawData.motorPolicyInfo.policyStartDate
@@ -928,7 +952,7 @@ const ChatScreen = (props) => {
       Car_Bran: '',
       Registration_Location: '',
       Transaction_Type: '',
-      Mortgage: parseFields(VehicleFront.Output[0].data, 'mortgage'),
+      Mortgage: parseFields(VehicleFront?.Output[0]?.data, 'mortgage'),
       Make_Code: (planName = 'Plan 1'
         ? vehicleModelData.makeCode
         : fidelityPolicy?.Data?.QuoteNo),
@@ -938,39 +962,42 @@ const ChatScreen = (props) => {
       No_Of_Cylinders: (planName = 'Plan 1'
         ? vehicleModelData.noOfCylinder
         : fidelityPolicy?.Data?.QuoteNo),
-      Manufacture_Year: parseFields(VehicleBack.Output[0].data, 'model'),
+      Manufacture_Year: parseFields(VehicleBack?.Output[0].data, 'model'),
       Usage_Type: '1001',
       Sum_Insured: sumInsured,
       Customer_Type: '100',
       User_FName: parseFields(DrivingFront.Output[0].data, 'name'),
       User_LName: '',
-      User_Nationality: parseFields(VehicleFront.Output[0].data, 'nationality'),
-      User_Address: parseFields(VehicleFront.Output[0].data, 'nationality'),
+      User_Nationality: parseFields(
+        VehicleFront?.Output[0]?.data,
+        'nationality',
+      ),
+      User_Address: parseFields(VehicleFront?.Output[0]?.data, 'nationality'),
       Quote_No: (planName = 'Plan 1' ? quoteNo : fidelityPolicy?.Data?.QuoteNo),
       Quote_Processed_By: '',
       Payment_Receipt_No: '',
-      Plate_Code: parseFields(VehicleFront.Output[0].data, 'plate_no'),
+      Plate_Code: parseFields(VehicleFront?.Output[0]?.data, 'plate_no'),
       Plate_Category: '',
       Color: '002',
-      V_Registered_Date: parseFields(VehicleFront.Output[0].data, 'reg_date'),
+      V_Registered_Date: parseFields(VehicleFront?.Output[0]?.data, 'reg_date'),
       Agency: '',
 
-      V_Plate_No: parseFields(VehicleFront.Output[0].data, 'plate_no'),
+      V_Plate_No: parseFields(VehicleFront?.Output[0]?.data, 'plate_no'),
       Ins_Type: '100',
-      Owner: parseFields(VehicleFront.Output[0].data, 'owner'),
-      Nationality: parseFields(VehicleFront.Output[0].data, 'nationality'),
-      Reg_Date: parseFields(VehicleFront.Output[0].data, 'reg_date'),
-      Ins_Exp_Date: parseFields(VehicleFront.Output[0].data, 'ins_exp'),
-      Exp_Date: parseFields(VehicleFront.Output[0].data, 'exp_date'),
-      TC_No: parseFields(VehicleFront.Output[0].data, 't_c_no'),
-      Model: parseFields(VehicleBack.Output[0].data, 'model'),
-      Origin: parseFields(VehicleBack.Output[0].data, 'origin'),
-      Body_Type: parseFields(VehicleBack.Output[0].data, 'origin1'),
-      Vehicle_Type: parseFields(VehicleBack.Output[0].data, 'vehicle_type'),
-      Engine_No: parseFields(VehicleBack.Output[0].data, 'engine_no'),
-      Chassis_No: parseFields(VehicleBack.Output[0].data, 'chassis_no'),
+      Owner: parseFields(VehicleFront?.Output[0]?.data, 'owner'),
+      Nationality: parseFields(VehicleFront?.Output[0]?.data, 'nationality'),
+      Reg_Date: parseFields(VehicleFront?.Output[0]?.data, 'reg_date'),
+      Ins_Exp_Date: parseFields(VehicleFront?.Output[0]?.data, 'ins_exp'),
+      Exp_Date: parseFields(VehicleFront?.Output[0]?.data, 'exp_date'),
+      TC_No: parseFields(VehicleFront?.Output[0]?.data, 't_c_no'),
+      Model: parseFields(VehicleBack?.Output[0].data, 'model'),
+      Origin: parseFields(VehicleBack?.Output[0].data, 'origin'),
+      Body_Type: parseFields(VehicleBack?.Output[0].data, 'origin1'),
+      Vehicle_Type: parseFields(VehicleBack?.Output[0].data, 'vehicle_type'),
+      Engine_No: parseFields(VehicleBack?.Output[0].data, 'engine_no'),
+      Chassis_No: parseFields(VehicleBack?.Output[0].data, 'chassis_no'),
       No_Of_Passengers: parseFields(
-        VehicleBack.Output[0].data,
+        VehicleBack?.Output[0].data,
         'number_of_pass',
       ),
       D_License_No: parseFields(DrivingFront.Output[0].data, 'license_no'),
@@ -1017,7 +1044,7 @@ const ChatScreen = (props) => {
       '' +
       ',' +
       'Policy_No:' +
-      parseFields(VehicleFront.Output[0].data, 'policy_no') +
+      parseFields(VehicleFront?.Output[0]?.data, 'policy_no') +
       ',' +
       'Partner_ID:' +
       '' +
@@ -1080,7 +1107,7 @@ const ChatScreen = (props) => {
       ',' +
       '' +
       'Mortgage:' +
-      parseFields(VehicleFront.Output[0].data, 'mortgage') +
+      parseFields(VehicleFront?.Output[0]?.data, 'mortgage') +
       ',' +
       '' +
       'Make_Code:' +
@@ -1100,7 +1127,7 @@ const ChatScreen = (props) => {
       ',' +
       '' +
       'Manufacture_Year:' +
-      parseFields(VehicleBack.Output[0].data, 'model') +
+      parseFields(VehicleBack?.Output[0].data, 'model') +
       ',' +
       '' +
       'Usage_Type:' +
@@ -1121,7 +1148,7 @@ const ChatScreen = (props) => {
       ',' +
       '' +
       'User_Nationality:' +
-      parseFields(VehicleFront.Output[0].data, 'nationality') +
+      parseFields(VehicleFront?.Output[0]?.data, 'nationality') +
       ',' +
       '' +
       'User_Address:' +
@@ -1139,7 +1166,7 @@ const ChatScreen = (props) => {
       ',' +
       '' +
       'Plate_Code:' +
-      parseFields(VehicleFront.Output[0].data, 'plate_no') +
+      parseFields(VehicleFront?.Output[0]?.data, 'plate_no') +
       ',' +
       'Plate_Category:' +
       '' +
@@ -1149,63 +1176,63 @@ const ChatScreen = (props) => {
       '002' +
       ',' +
       'V_Registered_Date:' +
-      parseFields(VehicleFront.Output[0].data, 'reg_date') +
+      parseFields(VehicleFront?.Output[0]?.data, 'reg_date') +
       ',' +
       '' +
       'Agency:' +
       '' +
       ',' +
       'V_Plate_No:' +
-      parseFields(VehicleFront.Output[0].data, 'plate_no') +
+      parseFields(VehicleFront?.Output[0]?.data, 'plate_no') +
       ',' +
       'Ins_Type:' +
       '100' +
       ',' +
       '' +
       'Owner:' +
-      parseFields(VehicleFront.Output[0].data, 'owner') +
+      parseFields(VehicleFront?.Output[0]?.data, 'owner') +
       ',' +
       'Nationality:' +
-      parseFields(VehicleFront.Output[0].data, 'nationality') +
+      parseFields(VehicleFront?.Output[0]?.data, 'nationality') +
       ',' +
       '' +
       'Reg_Date:' +
-      parseFields(VehicleFront.Output[0].data, 'reg_date') +
+      parseFields(VehicleFront?.Output[0]?.data, 'reg_date') +
       ',' +
       'Ins_Exp_Date:' +
-      parseFields(VehicleFront.Output[0].data, 'ins_exp') +
+      parseFields(VehicleFront?.Output[0]?.data, 'ins_exp') +
       ',' +
       '' +
       'Exp_Date:' +
-      parseFields(VehicleFront.Output[0].data, 'exp_date') +
+      parseFields(VehicleFront?.Output[0]?.data, 'exp_date') +
       ',' +
       'TC_No:' +
-      parseFields(VehicleFront.Output[0].data, 't_c_no') +
+      parseFields(VehicleFront?.Output[0]?.data, 't_c_no') +
       ',' +
       '' +
       'Model:' +
-      parseFields(VehicleBack.Output[0].data, 'model') +
+      parseFields(VehicleBack?.Output[0].data, 'model') +
       ',' +
       'Origin:' +
-      parseFields(VehicleBack.Output[0].data, 'origin') +
+      parseFields(VehicleBack?.Output[0].data, 'origin') +
       ',' +
       '' +
       'Body_Type:' +
-      parseFields(VehicleBack.Output[0].data, 'origin1') +
+      parseFields(VehicleBack?.Output[0].data, 'origin1') +
       ',' +
       'Vehicle_Type:' +
-      parseFields(VehicleBack.Output[0].data, 'vehicle_type') +
+      parseFields(VehicleBack?.Output[0].data, 'vehicle_type') +
       ',' +
       '' +
       'Engine_No:' +
-      parseFields(VehicleBack.Output[0].data, 'engine_no') +
+      parseFields(VehicleBack?.Output[0].data, 'engine_no') +
       ',' +
       'Chassis_No:' +
-      parseFields(VehicleBack.Output[0].data, 'chassis_no') +
+      parseFields(VehicleBack?.Output[0].data, 'chassis_no') +
       ',' +
       '' +
       'No_Of_Passengers:' +
-      parseFields(VehicleBack.Output[0].data, 'number_of_pass') +
+      parseFields(VehicleBack?.Output[0].data, 'number_of_pass') +
       ',' +
       'D_License_No:' +
       parseFields(DrivingFront.Output[0].data, 'license_no') +
@@ -1345,10 +1372,7 @@ const ChatScreen = (props) => {
       redirect: 'follow',
     };
 
-    fetch(
-      'https://insurecueapi.techforce.ai/insurecue/inserttoDB',
-      requestOptions,
-    )
+    fetch('http://132.145.186.226:5000/insurecue/inserttoDB', requestOptions)
       .then((response) => response.text())
       .then((result) => {
         result = JSON.parse(result);
@@ -1368,7 +1392,7 @@ const ChatScreen = (props) => {
 
   async function handleUserData() {
     if (isPhone === '' || isEmail === '') {
-      Alert.alert('Error', 'Please fill all the fileds');
+      // Alert.alert('Error', 'Please fill all the fileds');
     } else {
       let objData = {
         phone: isPhone,
@@ -1385,6 +1409,7 @@ const ChatScreen = (props) => {
           body: JSON.stringify({
             Phone_No: isPhone,
             Email_ID: isEmail,
+            Insurance_Type: insuranceType,
           }),
         },
       )
@@ -2466,14 +2491,17 @@ const ChatScreen = (props) => {
               <KeyboardAvoidingView style={styles.FormContainer}>
                 <View style={styles.formView}>
                   <Text style={styles.labelText}>Model Number:</Text>
-                  {/* {console.log(VehicleBack.Output[0].data, "data")} */}
-                  {/* {console.log(VehicleFront.Output[0].data[5])}
-              {console.log(VehicleBack.Output[0].data[2],'back side')} */}
+                  {/* {console.log(VehicleFront?.Output[0]?.data[5])}
+              {console.log(VehicleBack?.Output[0].data[2],'back side')} */}
                   <TextInput
                     value={modelNo}
                     onChangeText={(value) => setmodelNo(value)}
                     placeholderTextColor="grey"
-                    // placeholder={`${VehicleBack ? parseFields(VehicleBack.Output[0].data, "model") : ""}`}
+                    placeholder={`${
+                      VehicleBack
+                        ? parseFields(VehicleBack?.Output[0]?.data, 'model')
+                        : ''
+                    }`}
                     // placeholder="Samah Hamza"
                     style={styles.textInputstyle}
                     editable={true}
@@ -2486,7 +2514,11 @@ const ChatScreen = (props) => {
                     value={countryOrigin}
                     placeholderTextColor="grey"
                     // placeholder="19/04/1998"
-                    // placeholder={`${VehicleBack ? parseFields(VehicleBack.Output[0].data, "origin") : ""}`}
+                    placeholder={`${
+                      VehicleBack
+                        ? parseFields(VehicleBack?.Output[0]?.data, 'origin')
+                        : ''
+                    }`}
                     style={styles.textInputstyle}
                     editable={true}
                   />
@@ -2499,7 +2531,7 @@ const ChatScreen = (props) => {
                     placeholderTextColor="grey"
                     placeholder={`${
                       VehicleBack
-                        ? parseFields(VehicleBack.Output[0].data, 'origin1')
+                        ? parseFields(VehicleBack?.Output[0].data, 'origin1')
                         : ''
                     }`}
                     // placeholder="Sedan"
@@ -2516,7 +2548,7 @@ const ChatScreen = (props) => {
                     placeholder={`${
                       VehicleBack
                         ? parseFields(
-                            VehicleBack.Output[0].data,
+                            VehicleBack?.Output[0].data,
                             'vehicle_type',
                           )
                         : ''
@@ -2534,7 +2566,7 @@ const ChatScreen = (props) => {
                     placeholderTextColor="grey"
                     placeholder={`${
                       VehicleBack
-                        ? parseFields(VehicleBack.Output[0].data, 'engine_no')
+                        ? parseFields(VehicleBack?.Output[0].data, 'engine_no')
                         : ''
                     }`}
                     // placeholder="20/01/2020"
@@ -2550,7 +2582,7 @@ const ChatScreen = (props) => {
                     placeholderTextColor="grey"
                     placeholder={`${
                       VehicleBack
-                        ? parseFields(VehicleBack.Output[0].data, 'chassis_no')
+                        ? parseFields(VehicleBack?.Output[0].data, 'chassis_no')
                         : ''
                     }`}
                     // placeholder="Dubai"
@@ -2574,7 +2606,7 @@ const ChatScreen = (props) => {
                     placeholderTextColor="grey"
                     placeholder={`${
                       VehicleFront
-                        ? parseFields(VehicleFront.Output[0].data, 'owner')
+                        ? parseFields(VehicleFront?.Output[0]?.data, 'owner')
                         : ''
                     }`}
                     style={styles.textInputstyle}
@@ -2585,15 +2617,14 @@ const ChatScreen = (props) => {
                   <Text style={styles.labelText}>Plate Number:</Text>
                   {/* {console.log(VehicleBack,'data')} */}
 
-                  {console.log(VehicleFront?.Output[0].data)}
-                  {/* {console.log(VehicleBack.Output[0].data[2],'back side')} */}
+                  {/* {console.log(VehicleBack?.Output[0].data[2],'back side')} */}
                   <TextInput
                     value={plateNo}
                     onChangeText={(value) => setPlateNo(value)}
                     placeholderTextColor="grey"
                     placeholder={`${
                       VehicleFront
-                        ? parseFields(VehicleFront.Output[0].data, 'plate_no')
+                        ? parseFields(VehicleFront?.Output[0]?.data, 'plate_no')
                         : ''
                     }`}
                     // placeholder="Samah Hamza"
@@ -2612,7 +2643,7 @@ const ChatScreen = (props) => {
                     placeholder={`${
                       VehicleFront
                         ? parseFields(
-                            VehicleFront.Output[0].data,
+                            VehicleFront?.Output[0]?.data,
                             'nationality',
                           )
                         : ''
@@ -2627,7 +2658,7 @@ const ChatScreen = (props) => {
                     onChangeText={(value) => setExpiryDate(value)}
                     value={expiryDate}
                     placeholderTextColor="grey"
-                    placeholder={`${VehicleFront ? parseFields(VehicleFront.Output[0].data, "exp_date") : ""}`}
+                    placeholder={`${VehicleFront ? parseFields(VehicleFront?.Output[0]?.data, "exp_date") : ""}`}
                     // placeholder="Sedan"
                     style={styles.textInputstyle}
                     editable={true}
@@ -2638,7 +2669,7 @@ const ChatScreen = (props) => {
                     mode="date"
                     placeholder={`${
                       VehicleFront
-                        ? parseFields(VehicleFront.Output[0].data, 'exp_date')
+                        ? parseFields(VehicleFront?.Output[0]?.data, 'exp_date')
                         : ''
                     }`}
                     format="DD-MM-YYYY"
@@ -2663,7 +2694,7 @@ const ChatScreen = (props) => {
                     onChangeText={(value) => setInsuranceExpData(value)}
                     value={InsuranceExpData}
                     placeholderTextColor="grey"
-                    placeholder={`${VehicleFront ? parseFields(VehicleFront.Output[0].data, "ins_exp") : ""}`}
+                    placeholder={`${VehicleFront ? parseFields(VehicleFront?.Output[0]?.data, "ins_exp") : ""}`}
                     // placeholder="4"
                     style={styles.textInputstyle}
                     editable={true}
@@ -2674,7 +2705,7 @@ const ChatScreen = (props) => {
                     mode="date"
                     placeholder={`${
                       VehicleFront
-                        ? parseFields(VehicleFront.Output[0].data, 'ins_exp')
+                        ? parseFields(VehicleFront?.Output[0]?.data, 'ins_exp')
                         : ''
                     }`}
                     format="DD-MM-YYYY"
@@ -2701,7 +2732,10 @@ const ChatScreen = (props) => {
                     placeholderTextColor="grey"
                     placeholder={`${
                       VehicleFront
-                        ? parseFields(VehicleFront.Output[0].data, 'policy_no')
+                        ? parseFields(
+                            VehicleFront?.Output[0]?.data,
+                            'policy_no',
+                          )
                         : ''
                     }`}
                     // placeholder="20/01/2020"
@@ -2715,7 +2749,7 @@ const ChatScreen = (props) => {
                     onChangeText={(value) => setregistrationDate(value)}
                     value={registrationDate}
                     placeholderTextColor="grey"
-                    placeholder={`${VehicleFront ? parseFields(VehicleFront.Output[0].data, "reg_date") : ""}`}
+                    placeholder={`${VehicleFront ? parseFields(VehicleFront?.Output[0]?.data, "reg_date") : ""}`}
                     // placeholder="Dubai"
                     style={[styles.textInputstyle, { textAlign: "left" }]}
                     editable={true}
@@ -2726,7 +2760,7 @@ const ChatScreen = (props) => {
                     mode="date"
                     placeholder={`${
                       VehicleFront
-                        ? parseFields(VehicleFront.Output[0].data, 'reg_date')
+                        ? parseFields(VehicleFront?.Output[0]?.data, 'reg_date')
                         : ''
                     }`}
                     format="DD-MM-YYYY"
@@ -2778,7 +2812,7 @@ const ChatScreen = (props) => {
                     placeholderTextColor="grey"
                     placeholder={`${
                       VehicleFront
-                        ? parseFields(VehicleFront.Output[0].data, 't_c_no')
+                        ? parseFields(VehicleFront?.Output[0]?.data, 't_c_no')
                         : ''
                     }`}
                     style={styles.textInputstyle}

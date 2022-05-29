@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   View,
   Text,
@@ -11,23 +11,22 @@ import {
   TouchableOpacity,
   Slider,
   Share,
-  Image, ActivityIndicator,
-} from "react-native";
-import BobImg from "../assets/imgpsh_fullsize_anim.jpeg";
-import axios from "axios";
-import DatePicker from "react-native-datepicker";
-import LoaderUI from "../components/LoaderUI";
-import { useState } from "react";
-import { Bubbles } from 'react-native-loader';
-import Email from "../assets/mail.png";
-import Whatsapp from "../assets/whatsapp.png";
+  Image,
+  ActivityIndicator,
+} from 'react-native';
+import BobImg from '../assets/imgpsh_fullsize_anim.jpeg';
+import axios from 'axios';
+import DatePicker from 'react-native-datepicker';
+import LoaderUI from '../components/LoaderUI';
+import {useState} from 'react';
+import {Bubbles} from 'react-native-loader';
+import Email from '../assets/mail.png';
+import Whatsapp from '../assets/whatsapp.png';
 // import Pdf from 'react-native-pdf';
 // import PDFView from 'react-native-view-pdf';
-import PDFView from "react-native-view-pdf/lib/index";
-import RNFetchBlob from "rn-fetch-blob";
-import AsyncStorage from "@react-native-community/async-storage";
-
-
+import PDFView from 'react-native-view-pdf/lib/index';
+import RNFetchBlob from 'rn-fetch-blob';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const useMount = (func) => React.useEffect(() => func(), []);
 const useInitialURL = () => {
@@ -47,53 +46,54 @@ const useInitialURL = () => {
     };
 
     getUrlAsync();
-
   });
 
-  return { url, processing };
+  return {url, processing};
 };
 
 const ChatScreen2 = (props) => {
   const [loader, setLoader] = React.useState(false);
-  const [imageUrl, setImageUrl] = React.useState("");
-  const [planName, setplanName] = React.useState("");
+  const [imageUrl, setImageUrl] = React.useState('');
+  const [planName, setplanName] = React.useState('');
   const [isQuestion, setIsQuestion] = React.useState(false);
-  const [planRange, setplanRange] = React.useState("");
+  const [planRange, setplanRange] = React.useState('');
   const [paynow, setpayNow] = React.useState(false);
-  const [date, setDate] = React.useState("");
-  const [sliderPrice, setsliderPrice] = useState("");
-  const [buyPolicy, setBuyPolicy] = useState("");
-  const [policyData, setPolicyData] = React.useState("");
-  const [payurl, setpayurl] = React.useState("");
+  const [date, setDate] = React.useState('');
+  const [sliderPrice, setsliderPrice] = useState('');
+  const [buyPolicy, setBuyPolicy] = useState('');
+  const [policyData, setPolicyData] = React.useState('');
+  const [payurl, setpayurl] = React.useState('');
   const [payError, setpayError] = React.useState(false);
-  const [paymentAmount, setpaymentAmount] = React.useState("");
-  const { url: initialUrl, processing } = useInitialURL();
-  const [QuoteNo, setQuoteNo] = React.useState("");
-  const [biguri, setbiguri] = React.useState("");
-  const [documentName, setdocumentName] = React.useState("");
-  const [paymentResponse, setPaymentResponse] = React.useState("");
-  const [carModelData, setCarModelData] = React.useState("");
-  const [nationality, setNationality] = React.useState("");
-  const [VehicleFront, setVehicleFront] = React.useState("");
-  const [VehicleBack, setVehicleBack] = React.useState("");
-  const [DrivingFront, setDrivingFront] = React.useState("");
-  const [fidelityLogin, setFidelityLogin] = React.useState("");
-  const [fidelityQuotation, setFidelityQuotation] = React.useState("");
-  const [fidelityQuoteWithPlan, setFidelityQuoteWithPlan] = React.useState("");
-  const [fidelityAdditionalInfo, setFidelityAdditionalInfo] = React.useState("");
-  const [fidelityApprovePolicy, setFidelityApprovePolicy] = React.useState("");
-  const [fidelityPolicy, setfidelityPolicy] = React.useState("");
-  const [userData, setuserData] = React.useState("");
-  const [vehicleTypeMaster, setVehicleTypeMaster] = React.useState("");
-  const [isPlanLoaded, setIsPlanLoaded] = React.useState("");
-  const [vehicleModelData, setVehicleModelData] = React.useState("");
-  const [awnicRawData, setAwnicRawData] = React.useState("");
-  const [policyDocLink, setPolicyDocLink] = React.useState("");
-  const [customSliderPrice, setCustomSliderPrice] = React.useState("");
+  const [paymentAmount, setpaymentAmount] = React.useState('');
+  const {url: initialUrl, processing} = useInitialURL();
+  const [QuoteNo, setQuoteNo] = React.useState('');
+  const [biguri, setbiguri] = React.useState('');
+  const [documentName, setdocumentName] = React.useState('');
+  const [paymentResponse, setPaymentResponse] = React.useState('');
+  const [carModelData, setCarModelData] = React.useState('');
+  const [nationality, setNationality] = React.useState('');
+  const [VehicleFront, setVehicleFront] = React.useState('');
+  const [VehicleBack, setVehicleBack] = React.useState('');
+  const [DrivingFront, setDrivingFront] = React.useState('');
+  const [fidelityLogin, setFidelityLogin] = React.useState('');
+  const [fidelityQuotation, setFidelityQuotation] = React.useState('');
+  const [fidelityQuoteWithPlan, setFidelityQuoteWithPlan] = React.useState('');
+  const [fidelityAdditionalInfo, setFidelityAdditionalInfo] = React.useState(
+    '',
+  );
+  const [fidelityApprovePolicy, setFidelityApprovePolicy] = React.useState('');
+  const [fidelityPolicy, setfidelityPolicy] = React.useState('');
+  const [userData, setuserData] = React.useState('');
+  const [vehicleTypeMaster, setVehicleTypeMaster] = React.useState('');
+  const [isPlanLoaded, setIsPlanLoaded] = React.useState('');
+  const [vehicleModelData, setVehicleModelData] = React.useState('');
+  const [awnicRawData, setAwnicRawData] = React.useState('');
+  const [policyDocLink, setPolicyDocLink] = React.useState('');
+  const [customSliderPrice, setCustomSliderPrice] = React.useState('');
   const [isAPIError, setIsAPIError] = React.useState(false);
 
   async function openGateWay(transactionID) {
-    const { addNewOrderGatewayToken } = props;
+    const {addNewOrderGatewayToken} = props;
     const url = `https://insurcue.com/payment.php?TransactionID=${transactionID}`;
     const canOpen = await Linking.canOpenURL(url);
 
@@ -244,28 +244,29 @@ const ChatScreen2 = (props) => {
   //   ]
   // };
 
-
   async function setAsyncData() {
     // fetchVehicleType();
 
-    let vehicleFront = JSON.parse(await AsyncStorage.getItem("VEhicleFront"));
-    let vehicleBack = JSON.parse(await AsyncStorage.getItem("VEhicleBack"));
-    let drivingFront = JSON.parse(await AsyncStorage.getItem("drivingFront"));
-    let userData = JSON.parse(await AsyncStorage.getItem("LoginData"));
+    let vehicleFront = JSON.parse(await AsyncStorage.getItem('VEhicleFront'));
+    let vehicleBack = JSON.parse(await AsyncStorage.getItem('VEhicleBack'));
+    let drivingFront = JSON.parse(await AsyncStorage.getItem('drivingFront'));
+    let userData = JSON.parse(await AsyncStorage.getItem('LoginData'));
     setVehicleBack(vehicleBack);
     setVehicleFront(vehicleFront);
     setDrivingFront(drivingFront);
     setuserData(userData);
     // formatFidelityDateWithAlphaMonth(drivingFront.IssueDate)
-    console.log("tets adtae ", typeof (vehicleFront.RegistrationDate));
-    console.log("gthis is driving selected adate", vehicleFront.RegistrationDate);
+    console.log('tets adtae ', typeof vehicleFront.RegistrationDate);
+    console.log(
+      'gthis is driving selected adate',
+      vehicleFront.RegistrationDate,
+    );
     // if(props.vehicleTypeMaster){
     //   setVehicleTypeMaster(props.vehicleTypeMaster);
     //   console.log('this is vheicle type master data ',vehicleTypeMaster);
     // }
 
-    console.log("testing async data");
-
+    console.log('testing async data');
   }
 
   // function fetchVehicleType(){
@@ -292,31 +293,30 @@ const ChatScreen2 = (props) => {
   //     .catch(error => console.log('error', error));
   // }
 
-
   React.useEffect(() => {
     setAsyncData();
-    if (planRange === "Yes") {
-      console.log("this is vehicle Master Data");
+    if (planRange === 'Yes') {
+      console.log('this is vehicle Master Data');
 
-      console.log("testing data");
+      console.log('testing data');
 
       let myHeaders1 = new Headers();
-      myHeaders1.append("Partner-Id", "DOWALI");
-      myHeaders1.append("Api-Key", "6gbW8thKLuAzyeNWrWXVBQ4Rq");
-      myHeaders1.append("Content-Type", "application/json");
+      myHeaders1.append('Partner-Id', 'DOWALI');
+      myHeaders1.append('Api-Key', '6gbW8thKLuAzyeNWrWXVBQ4Rq');
+      myHeaders1.append('Content-Type', 'application/json');
 
-      let raw1 = JSON.stringify({ masterType: "VEHICLE_MAKE_MODEL" });
+      let raw1 = JSON.stringify({masterType: 'VEHICLE_MAKE_MODEL'});
 
       let requestOptions1 = {
-        method: "POST",
+        method: 'POST',
         headers: myHeaders1,
         body: raw1,
-        redirect: "follow",
+        redirect: 'follow',
       };
 
-      setIsPlanLoaded("Please wait while we fetch plans for you");
+      setIsPlanLoaded('Please wait while we fetch plans for you');
       fetch(
-        "https://insurance.awnic.com/InsureApi/API/motor/masterData",
+        'https://insurance.awnic.com/InsureApi/API/motor/masterData',
         requestOptions1,
       )
         .then((response) => response.text())
@@ -328,86 +328,82 @@ const ChatScreen2 = (props) => {
           // console.log('this is buypolicy ',buyPolicy);
         })
         .catch((error) => {
-          setIsPlanLoaded("Unable to fetch vehicle model in Master Data");
+          setIsPlanLoaded('Unable to fetch vehicle model in Master Data');
           setIsAPIError(true);
-          alert(error);
-          console.log("error in master data", error);
+          // alert(error);
+          console.log('error in master data', error);
         });
     }
   }, [planRange]);
 
   React.useEffect(() => {
     if (buyPolicy) {
-      console.log("test");
+      console.log('test');
       let modelData = searchVehicleData();
-      console.log("this is model data for testing ------+", modelData);
+      console.log('this is model data for testing ------+', modelData);
       // console.log('this is model data',modelData.makeCode);
 
       if (modelData) {
-
         var myHeaders = new Headers();
-        myHeaders.append("Partner-Id", "DOWALI");
-        myHeaders.append("Api-Key", "6gbW8thKLuAzyeNWrWXVBQ4Rq");
-        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append('Partner-Id', 'DOWALI');
+        myHeaders.append('Api-Key', '6gbW8thKLuAzyeNWrWXVBQ4Rq');
+        myHeaders.append('Content-Type', 'application/json');
 
         var raw = JSON.stringify({
           makeCode: modelData.makeCode,
           modelCode: modelData.code,
-          sumInsured: "0",
-          mfgYear: VehicleBack ? (VehicleBack.ModelNumber).trim() : "",
-          isAgencyYN: props.isAgencyRenewal === "Yes" ? "Y" : "N",
-          isAWNICRenewalYN: "N",
-          noClaimYear: "0",
+          sumInsured: '0',
+          mfgYear: VehicleBack ? VehicleBack.ModelNumber.trim() : '',
+          isAgencyYN: props.isAgencyRenewal === 'Yes' ? 'Y' : 'N',
+          isAWNICRenewalYN: 'N',
+          noClaimYear: '0',
         });
 
-
         var requestOptions = {
-          method: "POST",
+          method: 'POST',
           headers: myHeaders,
           body: raw,
-          redirect: "follow",
+          redirect: 'follow',
         };
 
         fetch(
-          "https://insurance.awnic.com/InsureApi/API/motor/calcPremiumMulti",
+          'https://insurance.awnic.com/InsureApi/API/motor/calcPremiumMulti',
           requestOptions,
         )
           .then((response) => response.text())
           .then((result) => {
             result = JSON.parse(result);
             if (result?.errorList === null) {
-              console.log("this is policy data", result);
+              console.log('this is policy data', result);
               setPolicyData(result);
-              setIsPlanLoaded("");
+              setIsPlanLoaded('');
             } else {
-              let errorMsg = "";
-              result.errorList.forEach(function(item) {
-                errorMsg += item.desc + ".";
+              let errorMsg = '';
+              result.errorList.forEach(function (item) {
+                errorMsg += item.desc + '.';
               });
-              setIsPlanLoaded("Unable to fetch plan");
+              setIsPlanLoaded('Unable to fetch plan');
               setIsAPIError(true);
-              alert(errorMsg);
+              // alert(errorMsg);
             }
 
-            console.log("this is nationality data ", nationality);
-            console.log(result, "re re 3");
+            console.log('this is nationality data ', nationality);
+            console.log(result, 're re 3');
           })
           .catch((error) => {
-            setIsPlanLoaded("Unable to fetch Calculated Premium");
+            setIsPlanLoaded('Unable to fetch Calculated Premium');
             setIsAPIError(true);
-            console.log("error in calc premium", error);
+            console.log('error in calc premium', error);
           });
       } else {
-        alert("Unable to find vehicle model type");
-        setIsPlanLoaded("Unable to find vehicle model type");
+        // alert("Unable to find vehicle model type");
+        setIsPlanLoaded('Unable to find vehicle model type');
         setIsAPIError(true);
       }
-
     }
 
-    console.log("testing is going on");
+    console.log('testing is going on');
   }, [buyPolicy]);
-
 
   React.useEffect(() => {
     if (policyData && date) {
@@ -415,112 +411,116 @@ const ChatScreen2 = (props) => {
 
       let modelData = searchVehicleData();
 
-      let t = VehicleFront ? VehicleFront.RegistrationDate : "";
+      let t = VehicleFront ? VehicleFront.RegistrationDate : '';
       let registrationDate = formatDateWithoutAlphaAwnic(t);
 
-      console.log("this is reg date", date);
+      console.log('this is reg date', date);
 
-      myHeaders.append("Partner-Id", "DOWALI");
-      myHeaders.append("Api-Key", "6gbW8thKLuAzyeNWrWXVBQ4Rq");
-      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append('Partner-Id', 'DOWALI');
+      myHeaders.append('Api-Key', '6gbW8thKLuAzyeNWrWXVBQ4Rq');
+      myHeaders.append('Content-Type', 'application/json');
       let quoteDate = Date.now();
       var raw = JSON.stringify({
         motorInsuredInfo: {
-          customerType: "Individual",
-          firstName: DrivingFront ? DrivingFront.Name : "",
-          lastName: ".",
+          customerType: 'Individual',
+          firstName: DrivingFront ? DrivingFront.Name : '',
+          lastName: '.',
           contactNo: userData.phone,
-          nationality: "1001",
-          address: DrivingFront ? (DrivingFront.PlaceOfIssue === "" ? "Dubai" : DrivingFront.PlaceOfIssue) : "",
+          nationality: '1001',
+          address: DrivingFront
+            ? DrivingFront.PlaceOfIssue === ''
+              ? 'Dubai'
+              : DrivingFront.PlaceOfIssue
+            : '',
         },
         motorPolicyInfo: {
           quoteNo: `XAD${quoteDate}`,
-          quoteProcessBy: "AL DOWALI",
+          quoteProcessBy: 'AL DOWALI',
           policyStartDate: formatDate(date),
           policyEndDate: formEndDate(date),
           productCode: policyData.premiumInfo[0].productCode,
-          assuredCode: "150200",
-          customerCode: "150200",
-          brokerCode: "150200",
-          paymentMode: "On Account",
-          paymentReceiptNo: "",
+          assuredCode: '150200',
+          customerCode: '150200',
+          brokerCode: '150200',
+          paymentMode: 'On Account',
+          paymentReceiptNo: '',
         },
         motorPremiumInfo: {
-          currency: "AED",
+          currency: 'AED',
           currencyRate: 1,
           grossPremium: policyData.premiumInfo[0].finalPremiumAmt,
           vatAmount: policyData.premiumInfo[0].finalPremiumVat,
         },
         motorVehicleInfo: {
-          isBrandNewYN: "N",
-          plateNo: VehicleFront ? VehicleFront.Plateno : "",
-          plateCode: "001",
-          plateCategory: "001",
-          registrationLocation: "02",
-          transactionType: "Vehicle Renewal",
-          isMortgageYN: VehicleFront ? (VehicleFront.Mortgage === "" ? "N" : "Y") : "N",
-          makeCode: modelData.makeCode ?? "",
-          modelCode: modelData.code ?? "",
-          noOfCylinderCode: modelData.noOfCylinderCode ?? "",
-          mfgYear: VehicleBack ? (VehicleBack.ModelNumber).trim() : "",
-          bodyType: "236",
-          chassisNo: VehicleBack ? VehicleBack.ChasisNumber : "",
-          engineNo: VehicleBack ? VehicleBack.EngineNumber : "",
-          color: "401",
-          seatingCapacity: modelData.noOfPassenger ?? "",
-          usageType: "101",
+          isBrandNewYN: 'N',
+          plateNo: VehicleFront ? VehicleFront.Plateno : '',
+          plateCode: '001',
+          plateCategory: '001',
+          registrationLocation: '02',
+          transactionType: 'Vehicle Renewal',
+          isMortgageYN: VehicleFront
+            ? VehicleFront.Mortgage === ''
+              ? 'N'
+              : 'Y'
+            : 'N',
+          makeCode: modelData.makeCode ?? '',
+          modelCode: modelData.code ?? '',
+          noOfCylinderCode: modelData.noOfCylinderCode ?? '',
+          mfgYear: VehicleBack ? VehicleBack.ModelNumber.trim() : '',
+          bodyType: '236',
+          chassisNo: VehicleBack ? VehicleBack.ChasisNumber : '',
+          engineNo: VehicleBack ? VehicleBack.EngineNumber : '',
+          color: '401',
+          seatingCapacity: modelData.noOfPassenger ?? '',
+          usageType: '101',
           sumInsured: sliderPrice,
-          tcnNo: VehicleFront ? (VehicleFront.TCNo).trim() : "",
+          tcnNo: VehicleFront ? VehicleFront.TCNo.trim() : '',
           registeredDate: registrationDate,
-          isAgencyYN: props.isAgencyRenewal === "Yes" ? "Y" : "N",
+          isAgencyYN: props.isAgencyRenewal === 'Yes' ? 'Y' : 'N',
           covers: [],
         },
       });
 
       setAwnicRawData(JSON.parse(raw));
-      console.log("this is raw data ---->", raw);
-
+      console.log('this is raw data ---->', raw);
 
       var requestOptions = {
-        method: "POST",
+        method: 'POST',
         headers: myHeaders,
         body: raw,
-        redirect: "follow",
+        redirect: 'follow',
       };
 
       fetch(
-        "https://insurance.awnic.com/InsureApi/API/motor/buyPolicy",
+        'https://insurance.awnic.com/InsureApi/API/motor/buyPolicy',
         requestOptions,
       )
         .then((response) => response.text())
         .then(async (result) => {
-          console.log(result, "buyplicy");
+          console.log(result, 'buyplicy');
           let response = await JSON.parse(result);
-          console.log("this is response data ", response);
+          console.log('this is response data ', response);
           if (response.errorList === null) {
             setQuoteNo(response.motorPolicyInfo.policyDocId);
-
           } else {
-            let errorMsg = "";
-            response.errorList.forEach(function(item) {
-              errorMsg += item.desc + ". ";
+            let errorMsg = '';
+            response.errorList.forEach(function (item) {
+              errorMsg += item.desc + '. ';
             });
 
-            alert(errorMsg);
+            // alert(errorMsg);
           }
-          console.log("this is buy awnic policy data", response);
-
+          console.log('this is buy awnic policy data', response);
         })
         .catch((error) => {
-          alert(error.toString());
-          console.log("error in buy policy", error);
+          // alert(error.toString());
+          console.log('error in buy policy', error);
         });
     }
   }, [policyData, date]);
 
-
   React.useEffect(() => {
-    if (sliderPrice !== "") {
+    if (sliderPrice !== '') {
       setIsQuestion(true);
     }
   }, [sliderPrice]);
@@ -528,7 +528,7 @@ const ChatScreen2 = (props) => {
   //executing fidelity apis
 
   React.useEffect(() => {
-    console.log("this is vehicle back data ?????", VehicleBack);
+    console.log('this is vehicle back data ?????', VehicleBack);
     // if (props.vehicleBack.BodyType === "Sedan") {
     //   fetch("http://132.145.186.226:5000/insurecue/insuranceAccessToken?pUserId=brkapi@uic.com&pUserPassword=123456",
     //     {
@@ -550,231 +550,271 @@ const ChatScreen2 = (props) => {
 
   React.useEffect(() => {
     if (fidelityLogin?.result1?.Data[0]?.Token) {
-
-      console.log("this is fidelity data ----> ", fidelityLogin);
+      console.log('this is fidelity data ----> ', fidelityLogin);
 
       let modelData = searchVehicleData();
-      console.log("without alpha", formatFidelityDateWithoutAlphaMonth("06-04-17"));
-      console.log("with alpha", formatFidelityDateWithAlphaMonth("11-Jan-2021"));
+      console.log(
+        'without alpha',
+        formatFidelityDateWithoutAlphaMonth('06-04-17'),
+      );
+      console.log(
+        'with alpha',
+        formatFidelityDateWithAlphaMonth('11-Jan-2021'),
+      );
 
       var myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append('Content-Type', 'application/json');
 
       //formatFidelityDateWithAlphaMonth(DrivingFront.IssueDate)
       //DrivingFront.DriverNationality
 
       var raw = JSON.stringify({
-        "pData": {
-          "Authentication": {
-            "Token": fidelityLogin.result1.Data[0].Token,
-            "UserId": "brkapi@uic.com",
+        pData: {
+          Authentication: {
+            Token: fidelityLogin.result1.Data[0].Token,
+            UserId: 'brkapi@uic.com',
           },
-          "Data": {
-            "AgentCode": "BRK0000264",
-            "POLPREVEXPDT": formatFidelityDateWithoutAlphaMonth(VehicleFront.InsuranceExp),
-            "POLPREVPOLNO": "",
-            "POLPRODUCT": props.InsType === "Comprehensive" ? "4001_1" : "4021",
-            "CLMFREEYR": 3,
-            "VEHNOOFDOOR": "4",
-            "POLPREVINSCOMP": "",
-            "INSRCODE": "",
-            "INSRNAME": DrivingFront.Name,
-            "INSREMAIL": userData.email,
-            "INSRDOB": formatFidelityDateWithAlphaMonth(DrivingFront.DOB),
-            "INSRTYPE": "100",
-            "INSRDRVLICENSENO": DrivingFront.LicenseNumber,
-            "INSRDRVLICENSEDT": "10/04/2019",
-            "INSRDRVLICENSEEMIRATE": "",
-            "INSRMOBILENO": userData.phone,
-            "INSRPHONENO": "",
-            "INSRNATIONALITY": "039",
-            "INSRTRADELICENSENO": "",
-            "INSRPASSPORTNO": "",
-            "INSREMPLOYER": "",
-            "INSRADDRESS1": "DUBAI",
-            "INSRADDRESS2": "Al Raffa",
-            "INSRPOBOXNO": "",
-            "INSREMIRATEID": "111111111111111",
-            "INSRPROFESSION": "",
-            "VEHTYPE": "1001",
-            "VEHMANFYEAR": "2011",
-            "VEHMAKE": "0304",
-            "VEHMODEL": "0304027",
-            "VEHTRIM": "LT",
-            "VEHBODYTYPE": "082",
-            "VEHENGINESIZE": "1.8 L",
-            "VEHTRANSMISISION": "AUTOMATIC",
-            "VEHREGION": "GCC",
-            "VEHVALUE": 0,
-            "VEHLOADINGCAP": "0",
-            "VEHNOOFCYLINDER": "1004",
-            "VEHNOOFPASSENGER": modelData.noOfPassenger ?? 5,
-            "VEHMANFCOUNTRY": "",
-            "VEHBRANDNEWYN": "N",
-            "VEHDOF": formatFidelityDateWithoutAlphaMonth(VehicleFront.RegistrationDate),
-            "VEHFROMDT": formatFidelityDateWithoutAlphaMonth(VehicleFront.InsuranceExp),
-            "VEHAGENCYREPYN": "N",
-            "VEHREGNEMIRATE": "DXB",
-            "VEHCHASSISNO": VehicleBack.ChasisNumber,
-            "VEHPLATECODE": "10512",
-            "VATREGNO": "54687",
-            "VEHREGNO": "48121",
-            "VEHTCFNO": "13058658",
-            "INSRNAMEL2": DrivingFront.Name,
-            "REGISTRATION": 0,
-            "VEHCOLOR": "002",
-            "POLSCHEMECODE": "ALL",
+          Data: {
+            AgentCode: 'BRK0000264',
+            POLPREVEXPDT: formatFidelityDateWithoutAlphaMonth(
+              VehicleFront.InsuranceExp,
+            ),
+            POLPREVPOLNO: '',
+            POLPRODUCT: props.InsType === 'Comprehensive' ? '4001_1' : '4021',
+            CLMFREEYR: 3,
+            VEHNOOFDOOR: '4',
+            POLPREVINSCOMP: '',
+            INSRCODE: '',
+            INSRNAME: DrivingFront.Name,
+            INSREMAIL: userData.email,
+            INSRDOB: formatFidelityDateWithAlphaMonth(DrivingFront.DOB),
+            INSRTYPE: '100',
+            INSRDRVLICENSENO: DrivingFront.LicenseNumber,
+            INSRDRVLICENSEDT: '10/04/2019',
+            INSRDRVLICENSEEMIRATE: '',
+            INSRMOBILENO: userData.phone,
+            INSRPHONENO: '',
+            INSRNATIONALITY: '039',
+            INSRTRADELICENSENO: '',
+            INSRPASSPORTNO: '',
+            INSREMPLOYER: '',
+            INSRADDRESS1: 'DUBAI',
+            INSRADDRESS2: 'Al Raffa',
+            INSRPOBOXNO: '',
+            INSREMIRATEID: '111111111111111',
+            INSRPROFESSION: '',
+            VEHTYPE: '1001',
+            VEHMANFYEAR: '2011',
+            VEHMAKE: '0304',
+            VEHMODEL: '0304027',
+            VEHTRIM: 'LT',
+            VEHBODYTYPE: '082',
+            VEHENGINESIZE: '1.8 L',
+            VEHTRANSMISISION: 'AUTOMATIC',
+            VEHREGION: 'GCC',
+            VEHVALUE: 0,
+            VEHLOADINGCAP: '0',
+            VEHNOOFCYLINDER: '1004',
+            VEHNOOFPASSENGER: modelData.noOfPassenger ?? 5,
+            VEHMANFCOUNTRY: '',
+            VEHBRANDNEWYN: 'N',
+            VEHDOF: formatFidelityDateWithoutAlphaMonth(
+              VehicleFront.RegistrationDate,
+            ),
+            VEHFROMDT: formatFidelityDateWithoutAlphaMonth(
+              VehicleFront.InsuranceExp,
+            ),
+            VEHAGENCYREPYN: 'N',
+            VEHREGNEMIRATE: 'DXB',
+            VEHCHASSISNO: VehicleBack.ChasisNumber,
+            VEHPLATECODE: '10512',
+            VATREGNO: '54687',
+            VEHREGNO: '48121',
+            VEHTCFNO: '13058658',
+            INSRNAMEL2: DrivingFront.Name,
+            REGISTRATION: 0,
+            VEHCOLOR: '002',
+            POLSCHEMECODE: 'ALL',
           },
         },
       });
 
-      console.log("this is quotation raw data ", raw);
+      console.log('this is quotation raw data ', raw);
 
       var requestOptions = {
-        method: "POST",
+        method: 'POST',
         headers: myHeaders,
         body: raw,
-        redirect: "follow",
+        redirect: 'follow',
       };
 
-      fetch("http://132.145.186.226:5000/insurecue/createquotation", requestOptions)
-        .then(response => response.text())
-        .then(result => {
+      fetch(
+        'http://132.145.186.226:5000/insurecue/createquotation',
+        requestOptions,
+      )
+        .then((response) => response.text())
+        .then((result) => {
           result = JSON.parse(result);
           if (result.data === undefined) {
             setFidelityQuotation(result);
-            console.log("this is quotation data ", result);
+            console.log('this is quotation data ', result);
           } else {
-            console.log("this is create quotation ", result);
-            alert("Unable to create fidelity quotation");
+            console.log('this is create quotation ', result);
+            // alert("Unable to create fidelity quotation");
           }
-
-
         })
-        .catch(error => console.log("error", error));
+        .catch((error) => console.log('error', error));
     }
-
   }, [fidelityLogin]);
 
   React.useEffect(() => {
     if (fidelityQuotation?.result1?.Covers) {
-      console.log("this is fidelity quotation ", fidelityQuotation.result1.Covers);
+      console.log(
+        'this is fidelity quotation ',
+        fidelityQuotation.result1.Covers,
+      );
       var myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append('Content-Type', 'application/json');
       let covers = [];
-      fidelityQuotation.result1.Covers.forEach(function(item) {
+      fidelityQuotation.result1.Covers.forEach(function (item) {
         let coverDetails = {
-          "Code": item.Code,
-          "CvrType": item.CvrType,
-          "Premium": item.Premium,
+          Code: item.Code,
+          CvrType: item.CvrType,
+          Premium: item.Premium,
         };
         covers.push(coverDetails);
       });
-      console.log("this is the cover arra", covers);
+      console.log('this is the cover arra', covers);
 
       var raw = JSON.stringify({
-        "pData": {
-          "Authentication": {
-            "Token": fidelityLogin.result1.Data[0].Token,
-            "UserId": "brkapi@uic.com",
+        pData: {
+          Authentication: {
+            Token: fidelityLogin.result1.Data[0].Token,
+            UserId: 'brkapi@uic.com',
           },
-          "SelectedCoverData": [
+          SelectedCoverData: [
             {
-              "QuotNo": fidelityQuotation.result1.QuotationNo,
-              "ProdCode": props.InsType ?? (props.InsType === "Comprehensive" ? "4001_1" : "4021") ?? "4021",
-              "SelectedCovers": covers,
+              QuotNo: fidelityQuotation.result1.QuotationNo,
+              ProdCode:
+                props.InsType ??
+                (props.InsType === 'Comprehensive' ? '4001_1' : '4021') ??
+                '4021',
+              SelectedCovers: covers,
             },
           ],
         },
       });
 
       var requestOptions = {
-        method: "POST",
+        method: 'POST',
         headers: myHeaders,
         body: raw,
-        redirect: "follow",
+        redirect: 'follow',
       };
 
-      fetch("http://132.145.186.226:5000/insurecue/saveQuoteWithPlan", requestOptions)
-        .then(response => response.text())
-        .then(result => {
+      fetch(
+        'http://132.145.186.226:5000/insurecue/saveQuoteWithPlan',
+        requestOptions,
+      )
+        .then((response) => response.text())
+        .then((result) => {
           result = JSON.parse(result);
           setFidelityQuoteWithPlan(result);
-          console.log("this is fidelity with plan data ", result);
+          console.log('this is fidelity with plan data ', result);
         })
-        .catch(error => console.log("error", error));
+        .catch((error) => console.log('error', error));
     }
   }, [fidelityQuotation]);
-
 
   React.useEffect(() => {
     if (fidelityQuoteWithPlan?.result1) {
       var myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+      myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
 
       var urlencoded = new URLSearchParams();
-      urlencoded.append("pData", "{\n" +
-        " \t\"Authentication\": {\n" +
-        "\t\t\"Token\": \"" + fidelityLogin.result1.Data[0].Token + "\",\n" +
-        "\t\t\"UserId\": \"brkapiabu@uic.com\"\n" +
-        "\t},\n" +
-        " \t\"ApprovePolicyData\": {\n" +
-        " \t\t\"QuotNo\": \"" + fidelityQuotation.result1.QuotationNo + "\"\n" +
-        " \t}\n" +
-        " }");
+      urlencoded.append(
+        'pData',
+        '{\n' +
+          ' \t"Authentication": {\n' +
+          '\t\t"Token": "' +
+          fidelityLogin.result1.Data[0].Token +
+          '",\n' +
+          '\t\t"UserId": "brkapiabu@uic.com"\n' +
+          '\t},\n' +
+          ' \t"ApprovePolicyData": {\n' +
+          ' \t\t"QuotNo": "' +
+          fidelityQuotation.result1.QuotationNo +
+          '"\n' +
+          ' \t}\n' +
+          ' }',
+      );
 
       var requestOptions = {
-        method: "POST",
+        method: 'POST',
         headers: myHeaders,
         body: urlencoded,
-        redirect: "follow",
+        redirect: 'follow',
       };
 
-      fetch("https://iirisapi.fidelityunited.ae/IirisApiServices.asmx/ApprovePolicy", requestOptions)
-        .then(response => response.text())
-        .then(result => {
-          console.log("this is approval policy ", result);
+      fetch(
+        'https://iirisapi.fidelityunited.ae/IirisApiServices.asmx/ApprovePolicy',
+        requestOptions,
+      )
+        .then((response) => response.text())
+        .then((result) => {
+          console.log('this is approval policy ', result);
           setFidelityApprovePolicy(result);
         })
-        .catch(error => console.log("error", error));
+        .catch((error) => console.log('error', error));
     }
   }, [fidelityQuoteWithPlan]);
 
-
   React.useEffect(() => {
-
-
     if (fidelityQuotation?.result1) {
-
       var myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+      myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
 
       var urlencoded = new URLSearchParams();
-      urlencoded.append("pData", "{\n" +
-        " \t\"Authentication\": {\n" +
-        "\t\t\"Token\": \"" + fidelityLogin.result1.Data[0].Token + "\",\n" +
-        "\t\t\"UserId\": \"brkapiabu@uic.com\"\n" +
-        "\t},\n" +
-        " \t\"ViewPolicySummaryData\": {\n" +
-        " \t\t\"QuotNo\": \"" + fidelityQuotation.result1.QuotationNo + "\"\n" +
-        " \t}\n" +
-        " }");
+      urlencoded.append(
+        'pData',
+        '{\n' +
+          ' \t"Authentication": {\n' +
+          '\t\t"Token": "' +
+          fidelityLogin.result1.Data[0].Token +
+          '",\n' +
+          '\t\t"UserId": "brkapiabu@uic.com"\n' +
+          '\t},\n' +
+          ' \t"ViewPolicySummaryData": {\n' +
+          ' \t\t"QuotNo": "' +
+          fidelityQuotation.result1.QuotationNo +
+          '"\n' +
+          ' \t}\n' +
+          ' }',
+      );
 
       var requestOptions = {
-        method: "POST",
+        method: 'POST',
         headers: myHeaders,
         body: urlencoded,
-        redirect: "follow",
+        redirect: 'follow',
       };
 
-      fetch("https://iirisapi.fidelityunited.ae/IirisApiServices.asmx/ViewPolicySummary", requestOptions)
-        .then(response => response.text())
-        .then(result => console.log(result))
-        .catch(error => console.log("error", error));
+      fetch(
+        'https://iirisapi.fidelityunited.ae/IirisApiServices.asmx/ViewPolicySummary',
+        requestOptions,
+      )
+        .then((response) => response.text())
+        .then((result) => console.log(result))
+        .catch((error) => console.log('error', error));
 
-
-      console.log("testing policy data>>>>", fidelityLogin.result1.Data[0].Token);
-      console.log("this is quote no >>>>>", fidelityQuotation.result1.QuotationNo);
+      console.log(
+        'testing policy data>>>>',
+        fidelityLogin.result1.Data[0].Token,
+      );
+      console.log(
+        'this is quote no >>>>>',
+        fidelityQuotation.result1.QuotationNo,
+      );
       let xmls = `<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
     <soap:Body>
       <ViewPolicySummary xmlns="http://www.assuretech.in/">
@@ -792,22 +832,30 @@ const ChatScreen2 = (props) => {
   </soap:Envelope>`;
 
       axios
-        .post("https://iirisapi.fidelityunited.ae/IirisApiServices.asmx", xmls, {
-          headers: {
-            SOAPAction: "http://www.assuretech.in/ViewPolicySummary",
-            "Content-Type": "text/xml",
+        .post(
+          'https://iirisapi.fidelityunited.ae/IirisApiServices.asmx',
+          xmls,
+          {
+            headers: {
+              SOAPAction: 'http://www.assuretech.in/ViewPolicySummary',
+              'Content-Type': 'text/xml',
+            },
           },
-        })
+        )
         .then((res) => {
-          var parseString = require("xml2js").parseString; //here i'm using a library colled xml2js to parse the respanse from xml to js object
-          var stripNS = require("xml2js").processors.stripPrefix;
+          var parseString = require('xml2js').parseString; //here i'm using a library colled xml2js to parse the respanse from xml to js object
+          var stripNS = require('xml2js').processors.stripPrefix;
           const options = {
             tagNameProcessors: [stripNS],
             explicitArray: false,
           };
-          parseString(res.data, options, function(err, result) {
-            if (JSON.parse(result.Envelope.Body.ViewPolicySummaryResponse
-              .ViewPolicySummaryResult)?.Status === undefined) {
+          parseString(res.data, options, function (err, result) {
+            if (
+              JSON.parse(
+                result.Envelope.Body.ViewPolicySummaryResponse
+                  .ViewPolicySummaryResult,
+              )?.Status === undefined
+            ) {
               setfidelityPolicy(
                 JSON.parse(
                   result.Envelope.Body.ViewPolicySummaryResponse
@@ -816,22 +864,30 @@ const ChatScreen2 = (props) => {
               );
             } else {
               axios
-                .post("https://iirisapi.fidelityunited.ae/IirisApiServices.asmx", xmls, {
-                  headers: {
-                    SOAPAction: "http://www.assuretech.in/ViewPolicySummary",
-                    "Content-Type": "text/xml",
+                .post(
+                  'https://iirisapi.fidelityunited.ae/IirisApiServices.asmx',
+                  xmls,
+                  {
+                    headers: {
+                      SOAPAction: 'http://www.assuretech.in/ViewPolicySummary',
+                      'Content-Type': 'text/xml',
+                    },
                   },
-                })
+                )
                 .then((res) => {
-                  var parseString = require("xml2js").parseString; //here i'm using a library colled xml2js to parse the respanse from xml to js object
-                  var stripNS = require("xml2js").processors.stripPrefix;
+                  var parseString = require('xml2js').parseString; //here i'm using a library colled xml2js to parse the respanse from xml to js object
+                  var stripNS = require('xml2js').processors.stripPrefix;
                   const options = {
                     tagNameProcessors: [stripNS],
                     explicitArray: false,
                   };
-                  parseString(res.data, options, function(err, result) {
-                    if (JSON.parse(result.Envelope.Body.ViewPolicySummaryResponse
-                      .ViewPolicySummaryResult)?.Status === undefined) {
+                  parseString(res.data, options, function (err, result) {
+                    if (
+                      JSON.parse(
+                        result.Envelope.Body.ViewPolicySummaryResponse
+                          .ViewPolicySummaryResult,
+                      )?.Status === undefined
+                    ) {
                       setfidelityPolicy(
                         JSON.parse(
                           result.Envelope.Body.ViewPolicySummaryResponse
@@ -839,37 +895,39 @@ const ChatScreen2 = (props) => {
                         ),
                       );
                     }
-                    console.log("ABC 44", result.Envelope.Body.ViewPolicySummaryResponse
-                      .ViewPolicySummaryResult);
+                    console.log(
+                      'ABC 44',
+                      result.Envelope.Body.ViewPolicySummaryResponse
+                        .ViewPolicySummaryResult,
+                    );
                     //  console.log(result.Envelope.Body.ViewPolicySummaryResponse.ViewPolicySummaryResult,'return of body');//get the value from the respanse object
                   });
-
                 })
                 .catch((err) => {
                   console.error(err);
-                  alert(err);
+                  // alert(err);
                 });
             }
 
-
-            console.log("ABC 42", result.Envelope.Body.ViewPolicySummaryResponse
-              .ViewPolicySummaryResult);
+            console.log(
+              'ABC 42',
+              result.Envelope.Body.ViewPolicySummaryResponse
+                .ViewPolicySummaryResult,
+            );
             //  console.log(result.Envelope.Body.ViewPolicySummaryResponse.ViewPolicySummaryResult,'return of body');//get the value from the respanse object
           });
-
         })
         .catch((err) => {
           console.error(err);
-          alert(err);
+          // alert(err);
         });
     }
   }, [fidelityQuoteWithPlan]);
 
-
   // function for getting correct field from response data
   function parseFields(data, field) {
-    let itemValue = "";
-    data.forEach(function(item) {
+    let itemValue = '';
+    data.forEach(function (item) {
       if (item.fieldName == field) {
         itemValue = item.fieldValue;
       }
@@ -877,43 +935,40 @@ const ChatScreen2 = (props) => {
     return itemValue;
   }
 
-
   //function to search vehicle in buy policy data
   function searchVehicleData() {
-    let modelData = "";
+    let modelData = '';
 
-    console.log("master json data is here ----> ", props.vehicleTypeMaster);
-    console.log("vehicle back data is here ----> ", VehicleBack);
-    console.log("this is test$$$$", props.vehicleTypeMaster);
+    console.log('master json data is here ----> ', props.vehicleTypeMaster);
+    console.log('vehicle back data is here ----> ', VehicleBack);
+    console.log('this is test$$$$', props.vehicleTypeMaster);
     if (VehicleBack && props.vehicleTypeMaster) {
       // let vehicleType = parseFields(props.VehicleBack.Output[0].data, "vehicle_type");
-      let vehicleType = props.vehicleSpecType ?? VehicleBack.VehicleType ?? "";
-      console.log("vdehicle type ---->", vehicleType);
+      let vehicleType = props.vehicleSpecType ?? VehicleBack.VehicleType ?? '';
+      console.log('vdehicle type ---->', vehicleType);
       // let t = vehicleType.split(" ");
       // let pattern = new RegExp(vehicleType, 'i');
       // console.log('this is pattern ',pattern);
-      props.vehicleTypeMaster.masterData.forEach(function(item) {
-        item.model.forEach(function(model) {
+      props.vehicleTypeMaster.masterData.forEach(function (item) {
+        item.model.forEach(function (model) {
           let m = model.name.toLowerCase();
           if (m.includes(vehicleType.toLowerCase())) {
-            console.log("pattern matched here for model ", model.name);
+            console.log('pattern matched here for model ', model.name);
             modelData = model;
-            modelData["makeCode"] = item.code;
+            modelData['makeCode'] = item.code;
           }
         });
       });
     }
-    console.log("this is testing data for model ", modelData);
+    console.log('this is testing data for model ', modelData);
     setVehicleModelData(modelData);
     return modelData;
   }
 
-
   function paymentRedirect() {
-
     var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Accept", "application/json");
+    myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append('Accept', 'application/json');
 
     var raw = JSON.stringify({
       Registration: {
@@ -929,54 +984,54 @@ const ChatScreen2 = (props) => {
         // OrderName: "Paybill",
         // UserName: "Demo_fY9c",
         // Password: "Comtrust@20182018",
-        Currency: "AED",
-        ReturnPath: "https://insurcue.com/response.php",
-        TransactionHint: "CPT:Y;VCC:Y;",
-        OrderID: "202104010456",
-        Store: "0000",
-        Terminal: "0000",
-        Channel: "Web",
+        Currency: 'AED',
+        ReturnPath: 'https://insurcue.com/response.php',
+        TransactionHint: 'CPT:Y;VCC:Y;',
+        OrderID: '202104010456',
+        Store: '0000',
+        Terminal: '0000',
+        Channel: 'Web',
         Amount: paymentAmount,
-        Customer: "AL ITTIHAD DOWALI",
-        OrderName: "Paybill",
-        UserName:"CHANDRESH_DOWALI",
-        Password:"Dowali@al032021"
+        Customer: 'AL ITTIHAD DOWALI',
+        OrderName: 'Paybill',
+        UserName: 'CHANDRESH_DOWALI',
+        Password: 'Dowali@al032021',
       },
     });
 
     var requestOptions = {
-      method: "POST",
+      method: 'POST',
       headers: myHeaders,
       body: raw,
-      redirect: "follow",
+      redirect: 'follow',
     };
 
-    fetch("https://ipg.comtrust.ae:2443", requestOptions)
+    fetch('https://ipg.comtrust.ae:2443', requestOptions)
       .then((response) => response.text())
       .then((result) => {
         console.log(result);
         setpayError(false);
         setpayNow(false);
         let url = JSON.parse(result);
-        console.log('transaction url -----',url.Transaction.TransactionID);
+        console.log('transaction url -----', url.Transaction.TransactionID);
         openGateWay(url.Transaction.TransactionID);
         // console.log(`https://insurcue.com/payment.php?TransactionID=${url.Transaction.TransactionID}`,'url')
         // Linking.openURL(`https://insurcue.com/payment.php?TransactionID=${url.Transaction.TransactionID}`)
         setpayurl(url.Transaction.TransactionID);
-        setbiguri("");
-        setTimeout(function() {
+        setbiguri('');
+        setTimeout(function () {
           checkPayment(url.Transaction.TransactionID);
         }, 5000);
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => console.log('error', error));
   }
 
   function checkPayment(TransactionID) {
-    console.log(AppState, "appsata");
-    if (AppState.currentState === "active") {
+    console.log(AppState, 'appsata');
+    if (AppState.currentState === 'active') {
       var myHeaders = new Headers();
-      myHeaders.append("Accept", "application/json");
-      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append('Accept', 'application/json');
+      myHeaders.append('Content-Type', 'application/json');
 
       var raw = JSON.stringify({
         Finalization: {
@@ -984,85 +1039,94 @@ const ChatScreen2 = (props) => {
           // Customer: "Demo Merchant",
           // UserName: "Demo_fY9c",
           // Password: "Comtrust@20182018",
-          Customer: "AL ITTIHAD DOWALI",
-          UserName:"CHANDRESH_DOWALI",
-          Password:"Dowali@al032021"
+          Customer: 'AL ITTIHAD DOWALI',
+          UserName: 'CHANDRESH_DOWALI',
+          Password: 'Dowali@al032021',
         },
       });
 
       var requestOptions = {
-        method: "POST",
+        method: 'POST',
         headers: myHeaders,
         body: raw,
-        redirect: "follow",
+        redirect: 'follow',
       };
 
-      fetch("https://ipg.comtrust.ae:2443", requestOptions)
+      fetch('https://ipg.comtrust.ae:2443', requestOptions)
         .then((response) => response.text())
         .then(async (result) => {
-          console.log(result, "sucess");
+          console.log(result, 'sucess');
           let respanse = await JSON.parse(result);
-          console.log(respanse.Transaction.ResponseCode, "awaiting");
-          if (respanse.Transaction.ResponseCode == "0") {
+          console.log(respanse.Transaction.ResponseCode, 'awaiting');
+          if (respanse.Transaction.ResponseCode == '0') {
             setPaymentResponse(respanse);
             setpayNow(true);
             setpayError(false);
             // getbuypolicy();
             downloadDocument(QuoteNo);
-          } else if (respanse.Transaction.ResponseCode !== "0") {
+          } else if (respanse.Transaction.ResponseCode !== '0') {
             setpayError(true);
           }
         })
-        .catch((error) => console.log("error", error));
+        .catch((error) => console.log('error', error));
     }
   }
 
   async function actualDownload() {
-    props.saveData(fidelityPolicy, policyData, paymentResponse, planName, vehicleModelData, awnicRawData, sliderPrice, policyDocLink, QuoteNo);
-    if (planName === "Plan 2") {
+    props.saveData(
+      fidelityPolicy,
+      policyData,
+      paymentResponse,
+      planName,
+      vehicleModelData,
+      awnicRawData,
+      sliderPrice,
+      policyDocLink,
+      QuoteNo,
+    );
+    if (planName === 'Plan 2') {
       let fidelityDoc = JSON.stringify({
         pdfurl: fidelityPolicy.Documents[0][0].Schdule,
       });
-      console.log("this is fidelity document ", fidelityPolicy);
+      console.log('this is fidelity document ', fidelityPolicy);
       // getpolicyDocument(fidelityDoc);
       setPolicyDocLink(fidelityPolicy.Documents[0][0].Schdule);
       shareDoc(JSON.parse(result));
     } else {
       var myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Accept", "application/json");
+      myHeaders.append('Content-Type', 'application/json');
+      myHeaders.append('Accept', 'application/json');
       // var raw = JSON.stringify({
       //   documentContent: biguri,
       //   documentName: 'Policy.pdf',
       // });
       var requestOptions = {
-        method: "POST",
+        method: 'POST',
         headers: myHeaders,
         body: JSON.stringify({
           documentContent: biguri,
           documentName: documentName,
         }),
-        redirect: "follow",
+        redirect: 'follow',
       };
 
-      fetch("https://insurcue.com/pdf.php", requestOptions)
+      fetch('https://insurcue.com/pdf.php', requestOptions)
         .then((response) => response.text())
         .then((result) => {
-          console.log(result, "download");
+          console.log(result, 'download');
           result = JSON.parse(result);
           // getpolicyDocument(result);
           setPolicyDocLink(result.pdfurl);
           shareDoc(result);
         })
-        .catch((error) => console.log("error", error));
+        .catch((error) => console.log('error', error));
     }
     //if all data is proper call save data function here
-
   }
 
   function getpolicyDocument(doc) {
     let document = JSON.parse(doc);
-    const { dirs } = RNFetchBlob.fs;
+    const {dirs} = RNFetchBlob.fs;
     RNFetchBlob.config({
       fileCache: true,
       addAndroidDownloads: {
@@ -1076,14 +1140,14 @@ const ChatScreen2 = (props) => {
       },
     })
       // .fetch('GET', `http://132.145.186.226:5000/insurecue/${resources}`, {})
-      .fetch("GET", `${document.pdfurl}`, {})
+      .fetch('GET', `${document.pdfurl}`, {})
       .then((res) => {
-        console.log("The file saved to ", res.path());
+        console.log('The file saved to ', res.path());
       })
       .catch((e) => {
         console.log(e);
       });
-    console.log(document.pdfurl, "doc");
+    console.log(document.pdfurl, 'doc');
   }
 
   async function downloadFile() {
@@ -1094,10 +1158,10 @@ const ChatScreen2 = (props) => {
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         actualDownload();
       } else {
-        Alert.alert(
-          "Permission Denied!",
-          "You need to give storage permission to download the file",
-        );
+        // Alert.alert(
+        //   "Permission Denied!",
+        //   "You need to give storage permission to download the file",
+        // );
       }
     } catch (err) {
       console.warn(err);
@@ -1105,11 +1169,9 @@ const ChatScreen2 = (props) => {
   }
 
   const shareDoc = async (doc) => {
-
     try {
       const result = await Share.share({
-        message:
-        doc.pdfurl,
+        message: doc.pdfurl,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -1124,7 +1186,6 @@ const ChatScreen2 = (props) => {
       //alert(error.message);
     }
   };
-
 
   // async function getbuypolicy() {
   //   var myHeaders = new Headers();
@@ -1238,77 +1299,103 @@ const ChatScreen2 = (props) => {
   // }
 
   function fetchNationality() {
-
     var myHeaders = new Headers();
-    myHeaders.append("Partner-Id", "DOWALI");
-    myHeaders.append("Api-Key", "6gbW8thKLuAzyeNWrWXVBQ4Rq");
-    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append('Partner-Id', 'DOWALI');
+    myHeaders.append('Api-Key', '6gbW8thKLuAzyeNWrWXVBQ4Rq');
+    myHeaders.append('Content-Type', 'application/json');
 
-    var raw = JSON.stringify({ "masterType": "NATIONALITY" });
+    var raw = JSON.stringify({masterType: 'NATIONALITY'});
 
     var requestOptions = {
-      method: "POST",
+      method: 'POST',
       headers: myHeaders,
       body: raw,
-      redirect: "follow",
+      redirect: 'follow',
     };
 
-    fetch("https://insurance.awnic.com/InsureApi/API/motor/masterData", requestOptions)
-      .then(response => response.text())
-      .then(result => {
+    fetch(
+      'https://insurance.awnic.com/InsureApi/API/motor/masterData',
+      requestOptions,
+    )
+      .then((response) => response.text())
+      .then((result) => {
         result = JSON.parse(result);
         if (result.errorList !== null) {
           setNationality(result.masterData);
         } else {
-          alert("Unable to fetch nationalities");
+          // alert("Unable to fetch nationalities");
         }
-
       })
-      .catch(error => console.log("error", error));
-
+      .catch((error) => console.log('error', error));
   }
 
   function formatDate(originalDate) {
-    console.log("test original date ", typeof (originalDate));
-    console.log("test org date ", originalDate);
+    console.log('test original date ', typeof originalDate);
+    console.log('test org date ', originalDate);
     // let s = originalDate.split("-");
     // originalDate = new Date();
     // originalDate.setDate(s[0]);
     // originalDate.setMonth(s[1]);
     // originalDate.setFullYear(s[2]);
     let date = new Date(originalDate);
-    let formattedDate = "";
-    let monthArr = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+    let formattedDate = '';
+    let monthArr = [
+      'JAN',
+      'FEB',
+      'MAR',
+      'APR',
+      'MAY',
+      'JUN',
+      'JUL',
+      'AUG',
+      'SEP',
+      'OCT',
+      'NOV',
+      'DEC',
+    ];
     if (date) {
-      let dateNum = (date.getDate() < 10) ? "0" + date.getDate() : date.getDate();
+      let dateNum = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
       let month = monthArr[date.getMonth()];
       let year = date.getFullYear();
-      formattedDate = dateNum + "-" + month + "-" + year;
+      formattedDate = dateNum + '-' + month + '-' + year;
     }
     return formattedDate;
   }
 
   function formatDateWithoutAlphaAwnic(originalDate) {
-    let s = originalDate.split("-");
+    let s = originalDate.split('-');
     let d = new Date();
     d.setDate(s[0]);
     d.setMonth(s[1]);
     d.setFullYear(s[2]);
     let date = new Date(d);
-    let formattedDate = "";
-    let monthArr = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+    let formattedDate = '';
+    let monthArr = [
+      'JAN',
+      'FEB',
+      'MAR',
+      'APR',
+      'MAY',
+      'JUN',
+      'JUL',
+      'AUG',
+      'SEP',
+      'OCT',
+      'NOV',
+      'DEC',
+    ];
     if (date) {
-      let dateNum = (date.getDate() < 10) ? "0" + date.getDate() : date.getDate();
+      let dateNum = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
       let month = monthArr[date.getMonth()];
       let year = date.getFullYear();
-      formattedDate = dateNum + "-" + month + "-" + year;
+      formattedDate = dateNum + '-' + month + '-' + year;
     }
     return formattedDate;
   }
 
   function formatFidelityDateWithAlphaMonth(date) {
-    if (typeof (date) === "string") {
-      let s = date.split("-");
+    if (typeof date === 'string') {
+      let s = date.split('-');
       date = new Date();
       date.setDate(s[0]);
       date.setMonth(s[1]);
@@ -1316,14 +1403,18 @@ const ChatScreen2 = (props) => {
     }
 
     let d = new Date(date);
-    return (d.getDate() < 10 ? "0" + d.getDate() : d.getDate()) +
-      "/" + ((d.getMonth() + 1) < 10 ? "0" + (d.getMonth() + 1) : (d.getMonth() + 1)) +
-      "/" + d.getFullYear();
+    return (
+      (d.getDate() < 10 ? '0' + d.getDate() : d.getDate()) +
+      '/' +
+      (d.getMonth() + 1 < 10 ? '0' + (d.getMonth() + 1) : d.getMonth() + 1) +
+      '/' +
+      d.getFullYear()
+    );
   }
 
   function formatFidelityDateWithoutAlphaMonth(date) {
     let d;
-    let s = date.split("-");
+    let s = date.split('-');
     d = new Date();
     d.setDate(s[0]);
     d.setMonth(s[1]);
@@ -1333,8 +1424,8 @@ const ChatScreen2 = (props) => {
   }
 
   function formEndDate(originalDate) {
-    console.log("this end org date ", originalDate);
-    console.log("this is end org adte type", typeof (originalDate));
+    console.log('this end org date ', originalDate);
+    console.log('this is end org adte type', typeof originalDate);
     let date = new Date(originalDate);
     date.setFullYear(date.getFullYear() + 1);
     date.setMonth(date.getMonth() + 1);
@@ -1344,39 +1435,48 @@ const ChatScreen2 = (props) => {
 
   function downloadDocument(quote) {
     var myHeaders = new Headers();
-    myHeaders.append("Partner-Id", "DOWALI");
-    myHeaders.append("Api-Key", "6gbW8thKLuAzyeNWrWXVBQ4Rq");
-    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append('Partner-Id', 'DOWALI');
+    myHeaders.append('Api-Key', '6gbW8thKLuAzyeNWrWXVBQ4Rq');
+    myHeaders.append('Content-Type', 'application/json');
 
-    var raw = JSON.stringify({ docId: quote });
+    var raw = JSON.stringify({docId: quote});
 
     var requestOptions = {
-      method: "POST",
+      method: 'POST',
       headers: myHeaders,
       body: raw,
-      redirect: "follow",
+      redirect: 'follow',
     };
     fetch(
-      "https://insurance.awnic.com/InsureApi/API/motor/motorDownloadDocument",
+      'https://insurance.awnic.com/InsureApi/API/motor/motorDownloadDocument',
       requestOptions,
     )
       .then((response) => response.text())
       .then(async (result) => {
-        console.log(result, "download");
+        console.log(result, 'download');
         let ABC = await JSON.parse(result);
         setbiguri(ABC.documentContent);
         setdocumentName(ABC.documentName);
 
         //send mail and save data
-        props.saveData(fidelityPolicy, policyData, paymentResponse, planName, vehicleModelData, awnicRawData, sliderPrice, policyDocLink, QuoteNo);
-
+        props.saveData(
+          fidelityPolicy,
+          policyData,
+          paymentResponse,
+          planName,
+          vehicleModelData,
+          awnicRawData,
+          sliderPrice,
+          policyDocLink,
+          QuoteNo,
+        );
 
         // saving final data into database
         //props.saveData(fidelityPolicy,paymentResponse);
 
         //console.log("response valid", result.documentName);
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => console.log('error', error));
   }
 
   // async function sendMailForVerification(){
@@ -1439,51 +1539,51 @@ const ChatScreen2 = (props) => {
   // }
 
   function setFinalSliderPrice() {
-    if (customSliderPrice !== "") {
+    if (customSliderPrice !== '') {
       setsliderPrice(customSliderPrice);
     } else {
-      alert("Please enter car valuation");
+      // alert("Please enter car valuation");
     }
   }
 
   return (
     <>
-      <ScrollView style={{ backgroundColor: "white" }}>
-        <View style={{ marginVertical: 10, marginHorizontal: 10 }}>
+      <ScrollView style={{backgroundColor: 'white'}}>
+        <View style={{marginVertical: 10, marginHorizontal: 10}}>
           {props.insRange.length > 1 ? (
             <>
               <View style={styles.BotQuestion}>
                 <Text style={styles.BotText}>
-                  With the current information you’ve submitted, we estimate that
-                  your value is between
+                  With the current information you’ve submitted, we estimate
+                  that your value is between
                 </Text>
               </View>
               <View style={styles.boxQuestion}>
                 <View
                   style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
                     marginHorizontal: 20,
-                    width: "70%",
+                    width: '70%',
                     marginTop: 5,
                   }}>
                   <Text
                     style={{
-                      fontFamily: "Mukta-Regular",
-                      color: "salmon",
+                      fontFamily: 'Mukta-Regular',
+                      color: 'salmon',
                     }}>
                     AED {props.insRange[0] ?? 1000}
                   </Text>
                   <Text
                     style={{
-                      fontFamily: "Mukta-Regular",
-                      color: "salmon",
+                      fontFamily: 'Mukta-Regular',
+                      color: 'salmon',
                     }}>
                     AED {props.insRange[1] ?? 2000}
                   </Text>
                 </View>
                 <Slider
-                  style={{ width: 250, height: 30 }}
+                  style={{width: 250, height: 30}}
                   minimumValue={props.insRange[0] ?? 1000}
                   step={1}
                   onValueChange={(e) => setsliderPrice(e)}
@@ -1491,7 +1591,9 @@ const ChatScreen2 = (props) => {
                   minimumTrackTintColor="#FFFFFF"
                   maximumTrackTintColor="#000000"
                 />
-              </View></>) : (
+              </View>
+            </>
+          ) : (
             <>
               <View style={styles.BotQuestion}>
                 <Text style={styles.BotText}>
@@ -1501,47 +1603,46 @@ const ChatScreen2 = (props) => {
               <View style={styles.BotQuestion}>
                 <View
                   style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
                     marginHorizontal: 5,
                     marginVertical: 5,
-                    width: "70%",
-                    alignItems: "center",
+                    width: '70%',
+                    alignItems: 'center',
                   }}>
-
-                  <Text style={{ color: "white" }}>
-                    AED
-                  </Text>
+                  <Text style={{color: 'white'}}>AED</Text>
                   <TextInput
                     value={customSliderPrice}
                     keyboardType="numeric"
                     onChangeText={(value) => setCustomSliderPrice(value)}
                     placeholderTextColor="grey"
                     placeholder="Enter car valuation"
-                    style={[styles.textInputstyle, {
-                      margin: 0,
-                      backgroundColor: "white",
-                      paddingHorizontal: 10,
-                      width: 100,
-                    }]}
+                    style={[
+                      styles.textInputstyle,
+                      {
+                        margin: 0,
+                        backgroundColor: 'white',
+                        paddingHorizontal: 10,
+                        width: 100,
+                      },
+                    ]}
                     editable={true}
                   />
-
 
                   <TouchableOpacity
                     onPress={() => {
                       setFinalSliderPrice();
                     }}
                     style={{
-                      backgroundColor: "#fa7a72",
+                      backgroundColor: '#fa7a72',
                       width: 70,
                       borderRadius: 20,
-                      alignSelf: "center",
+                      alignSelf: 'center',
                     }}>
                     <Text
                       style={{
-                        textAlign: "center",
-                        color: "white",
+                        textAlign: 'center',
+                        color: 'white',
                         fontSize: 16,
                         padding: 8,
                       }}>
@@ -1552,59 +1653,61 @@ const ChatScreen2 = (props) => {
               </View>
             </>
           )}
-          {sliderPrice !== "" && props.insRange.length > 1 ? (
+          {sliderPrice !== '' && props.insRange.length > 1 ? (
             <View
               style={[
                 styles.boxQuestion,
                 {
-                  width: "35%",
-                  backgroundColor: "#0e0551",
-
+                  width: '35%',
+                  backgroundColor: '#0e0551',
                 },
               ]}>
               <Text
                 style={{
-                  fontFamily: "Mukta-Regular",
-                  color: "white",
+                  fontFamily: 'Mukta-Regular',
+                  color: 'white',
                   fontSize: 16,
                   padding: 10,
-
                 }}>
                 AED {sliderPrice}
               </Text>
             </View>
           ) : null}
-          {console.log("this is the plan range", isPlanLoaded)}
-          {isPlanLoaded === "" && planRange !== "" ? (
+          {console.log('this is the plan range', isPlanLoaded)}
+          {isPlanLoaded === '' && planRange !== '' ? (
             <>
-              <View style={{ marginTop: 10 }}>
+              <View style={{marginTop: 10}}>
                 <View style={styles.BotQuestion}>
                   <Text style={styles.BotText}>
                     Great news! I’ve successfully found you several available
-                    plans that are best suited to your needs. Take a look below.{" "}
+                    plans that are best suited to your needs. Take a look below.{' '}
                   </Text>
                 </View>
                 <Text style={styles.PlanText}>Plans</Text>
               </View>
-              {console.log(policyData, "policy data")}
+              {console.log(policyData, 'policy data')}
               {policyData?.premiumInfo?.map((i) => (
                 <TouchableOpacity
                   onPress={() => {
-                    setplanName("Plan 1"), setpaymentAmount(parseInt(i.finalPremiumAmt) + parseInt(i.finalPremiumVat));
+                    setplanName('Plan 1'),
+                      setpaymentAmount(
+                        parseInt(i.finalPremiumAmt) +
+                          parseInt(i.finalPremiumVat),
+                      );
                   }}
                   style={[
                     styles.boxQuestion,
-                    { borderRadius: 10, marginHorizontal: 10 },
-                    planName == "Plan 1"
-                      ? { backgroundColor: "#ddd" }
-                      : { backgroundColor: "#f1f2f2" },
+                    {borderRadius: 10, marginHorizontal: 10},
+                    planName == 'Plan 1'
+                      ? {backgroundColor: '#ddd'}
+                      : {backgroundColor: '#f1f2f2'},
                   ]}>
                   {/* {console.log(i.planDesc,'inside')} */}
                   <View
                     style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "space-between",
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
                       marginHorizontal: 5,
                     }}>
                     <View
@@ -1615,12 +1718,12 @@ const ChatScreen2 = (props) => {
                       }>
                       <Text
                         style={{
-                          fontFamily: "Mukta-Regular",
-                          color: "salmon",
+                          fontFamily: 'Mukta-Regular',
+                          color: 'salmon',
                           padding: 8,
-                          fontWeight: "bold",
+                          fontWeight: 'bold',
                           fontSize: 16,
-                          backgroundColor: "white",
+                          backgroundColor: 'white',
                           marginTop: 5,
                         }}>
                         AWNIC
@@ -1628,68 +1731,70 @@ const ChatScreen2 = (props) => {
                     </View>
                     <View
                       style={{
-                        backgroundColor: "transparent",
+                        backgroundColor: 'transparent',
                       }}>
                       <View
                         style={{
                           width: 90,
                           height: 77,
-                          borderBottomColor: "#0e0551",
+                          borderBottomColor: '#0e0551',
                           borderBottomWidth: 0,
-                          borderLeftColor: "transparent",
-                          borderRightColor: "transparent",
-                          borderTopColor: "#0e0551",
+                          borderLeftColor: 'transparent',
+                          borderRightColor: 'transparent',
+                          borderTopColor: '#0e0551',
                           borderTopWidth: 50,
                           //  position:'relative'
                         }}>
                         <Text
                           style={{
-                            fontWeight: "bold",
-                            color: "white",
+                            fontWeight: 'bold',
+                            color: 'white',
                             fontSize: 14,
                             top: -35,
                             zIndex: 2,
-                            textAlign: "center",
+                            textAlign: 'center',
                             //  position:'absolute'
                           }}>
-                          AED {parseInt(i.finalPremiumAmt) + parseInt(i.finalPremiumVat)}
+                          AED{' '}
+                          {parseInt(i.finalPremiumAmt) +
+                            parseInt(i.finalPremiumVat)}
                         </Text>
                       </View>
                       <View
                         style={{
-                          position: "absolute",
+                          position: 'absolute',
                           bottom: 2,
                           left: 0,
                           width: 0,
                           height: 0,
-                          borderStyle: "solid",
+                          borderStyle: 'solid',
                           borderLeftWidth: 45,
-                          borderLeftColor: "transparent",
+                          borderLeftColor: 'transparent',
                           borderRightWidth: 45,
-                          borderRightColor: "transparent",
+                          borderRightColor: 'transparent',
                           borderTopWidth: 25,
-                          borderTopColor: "#0e0551",
+                          borderTopColor: '#0e0551',
                         }}
                       />
                     </View>
                   </View>
-                  <View style={{ marginTop: -12, marginHorizontal: 10 }}>
+                  <View style={{marginTop: -12, marginHorizontal: 10}}>
                     <Text
                       style={{
-                        fontWeight: "bold",
-                        color: "black",
+                        fontWeight: 'bold',
+                        color: 'black',
                         fontSize: 16,
                       }}>
                       Add-On cover
                     </Text>
                     <Text
                       style={{
-                        color: "black",
+                        color: 'black',
                         fontSize: 14,
                         paddingVertical: 3,
                       }}>
                       * {i.covers[0].coverDesc}
-                      {`\n`}* {i.covers[1].coverDesc} {`\n`}*{" "}
+                      {`\n`}* {i.covers[1].coverDesc} {`\n`}*{' '}
                       {i.covers[2].coverDesc} {`\n`}
                     </Text>
                   </View>
@@ -1698,57 +1803,57 @@ const ChatScreen2 = (props) => {
               {fidelityPolicy?.Data?.GrossPremium !== undefined ? (
                 <TouchableOpacity
                   onPress={() => {
-                    setplanName("Plan 2"),
+                    setplanName('Plan 2'),
                       setpaymentAmount(fidelityPolicy.Data?.GrossPremium);
                   }}
                   style={[
                     styles.boxQuestion,
-                    planName == "Plan 2"
-                      ? { backgroundColor: "#ddd" }
-                      : { backgroundColor: "#f2f2f2" },
+                    planName == 'Plan 2'
+                      ? {backgroundColor: '#ddd'}
+                      : {backgroundColor: '#f2f2f2'},
                   ]}>
                   {/*{console.log(fidelityPolicy.Data,'inside 2')}*/}
                   <View
                     style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "space-between",
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
                       marginHorizontal: 5,
                     }}>
                     <View Style={{}}>
                       <Text
                         style={{
-                          fontFamily: "Mukta-Regular",
-                          color: "salmon",
+                          fontFamily: 'Mukta-Regular',
+                          color: 'salmon',
                           padding: 8,
                           fontSize: 18,
-                          backgroundColor: "white",
+                          backgroundColor: 'white',
                         }}>
-                        {" "}
+                        {' '}
                         Fidelity Insurance
                       </Text>
                     </View>
                     <View
                       style={{
-                        backgroundColor: "transparent",
+                        backgroundColor: 'transparent',
                       }}>
                       <View
                         style={{
                           width: 90,
                           height: 77,
-                          borderBottomColor: "#0e0551",
+                          borderBottomColor: '#0e0551',
                           borderBottomWidth: 0,
-                          borderLeftColor: "transparent",
-                          borderRightColor: "transparent",
-                          borderTopColor: "#0e0551",
+                          borderLeftColor: 'transparent',
+                          borderRightColor: 'transparent',
+                          borderTopColor: '#0e0551',
                           borderTopWidth: 50,
                         }}>
                         <Text
                           style={{
-                            fontWeight: "bold",
-                            color: "white",
+                            fontWeight: 'bold',
+                            color: 'white',
                             fontSize: 14,
-                            textAlign: "center",
+                            textAlign: 'center',
                             top: -35,
                             zIndex: 2,
                           }}>
@@ -1757,24 +1862,24 @@ const ChatScreen2 = (props) => {
                       </View>
                       <View
                         style={{
-                          position: "absolute",
+                          position: 'absolute',
                           bottom: 2,
                           left: 0,
                           width: 0,
                           height: 0,
-                          borderStyle: "solid",
+                          borderStyle: 'solid',
                           borderLeftWidth: 45,
-                          borderLeftColor: "transparent",
+                          borderLeftColor: 'transparent',
                           borderRightWidth: 45,
-                          borderRightColor: "transparent",
+                          borderRightColor: 'transparent',
                           borderTopWidth: 25,
-                          borderTopColor: "#0e0551",
+                          borderTopColor: '#0e0551',
                         }}
                       />
                     </View>
                   </View>
-                  <View style={{ marginTop: -10, marginHorizontal: 10 }}>
-                    <Text style={{ fontWeight: "bold", color: "black" }}>
+                  <View style={{marginTop: -10, marginHorizontal: 10}}>
+                    <Text style={{fontWeight: 'bold', color: 'black'}}>
                       For 2 years
                     </Text>
                     <Text>
@@ -1787,38 +1892,38 @@ const ChatScreen2 = (props) => {
                 </TouchableOpacity>
               ) : null}
 
-              {planName !== "" ? (
-                <View style={{ flexDirection: "row-reverse" }}>
-                  <View style={[styles.answerBox, { flexDirection: "row" }]}>
+              {planName !== '' ? (
+                <View style={{flexDirection: 'row-reverse'}}>
+                  <View style={[styles.answerBox, {flexDirection: 'row'}]}>
                     <View style={styles.checkboxRight}>
                       <Text
                         style={{
-                          color: "white",
+                          color: 'white',
                           fontSize: 14,
-                          alignSelf: "center",
-                          justifyContent: "center",
+                          alignSelf: 'center',
+                          justifyContent: 'center',
                         }}>
                         ✓
                       </Text>
                     </View>
                     <Text
                       style={{
-                        color: "salmon",
+                        color: 'salmon',
                         padding: 10,
                         fontSize: 14,
-                        alignSelf: "center",
-                        justifyContent: "center",
-                        fontWeight: "bold",
+                        alignSelf: 'center',
+                        justifyContent: 'center',
+                        fontWeight: 'bold',
                       }}>
                       {planName}
-                      {planName == "Plan 2"
-                        ? "  Fidelity Insurance"
-                        : "  AWNIC"}
+                      {planName == 'Plan 2'
+                        ? '  Fidelity Insurance'
+                        : '  AWNIC'}
                     </Text>
                   </View>
                 </View>
               ) : null}
-              {planName !== "" ? (
+              {planName !== '' ? (
                 <>
                   <View style={styles.BotQuestion}>
                     <Text style={styles.BotText}>
@@ -1831,7 +1936,7 @@ const ChatScreen2 = (props) => {
                     </Text>
                   </View>
                   <DatePicker
-                    style={{ width: 150, color: "salmon" }}
+                    style={{width: 150, color: 'salmon'}}
                     date={date}
                     mode="date"
                     placeholder="select date"
@@ -1842,7 +1947,7 @@ const ChatScreen2 = (props) => {
                     cancelBtnText="Cancel"
                     customStyles={{
                       dateIcon: {
-                        position: "absolute",
+                        position: 'absolute',
                         left: 0,
                         top: 4,
                         marginLeft: 0,
@@ -1855,14 +1960,13 @@ const ChatScreen2 = (props) => {
                     }}
                     onDateChange={(date) => {
                       setDate(date);
-
                     }}
                   />
                 </>
               ) : null}
-              {date !== "" ? (
+              {date !== '' ? (
                 <>
-                  <View style={[styles.BotQuestion, { marginTop: 20 }]}>
+                  <View style={[styles.BotQuestion, {marginTop: 20}]}>
                     <Text style={styles.BotText}>
                       Now all that’s left to do is make the payment and your
                       insurance is sorted!
@@ -1889,53 +1993,58 @@ const ChatScreen2 = (props) => {
                         Pay Now
                     </Text>
                     </TouchableOpacity> */}
-                  {(planName === "Plan 1") ? (QuoteNo !== "" ? ((paynow === true) ? null :
+                  {planName === 'Plan 1' ? (
+                    QuoteNo !== '' ? (
+                      paynow === true ? null : (
+                        <TouchableOpacity
+                          onPress={() => {
+                            paymentRedirect();
+                          }}
+                          style={{
+                            backgroundColor: '#fa7a72',
+                            width: 100,
+                            borderRadius: 20,
+                            alignSelf: 'center',
+                            marginTop: 10,
+                          }}>
+                          <Text
+                            style={{
+                              textAlign: 'center',
+                              color: 'white',
+                              fontSize: 16,
+                              padding: 8,
+                            }}>
+                            Pay Now
+                          </Text>
+                        </TouchableOpacity>
+                      )
+                    ) : null
+                  ) : paynow === true ? null : (
                     <TouchableOpacity
                       onPress={() => {
                         paymentRedirect();
                       }}
                       style={{
-                        backgroundColor: "#fa7a72",
+                        backgroundColor: '#fa7a72',
                         width: 100,
                         borderRadius: 20,
-                        alignSelf: "center",
+                        alignSelf: 'center',
                         marginTop: 10,
                       }}>
                       <Text
                         style={{
-                          textAlign: "center",
-                          color: "white",
+                          textAlign: 'center',
+                          color: 'white',
                           fontSize: 16,
                           padding: 8,
                         }}>
                         Pay Now
                       </Text>
-                    </TouchableOpacity>) : null) :
-                    ((paynow === true) ? null :
-                      <TouchableOpacity
-                        onPress={() => {
-                          paymentRedirect();
-                        }}
-                        style={{
-                          backgroundColor: "#fa7a72",
-                          width: 100,
-                          borderRadius: 20,
-                          alignSelf: "center",
-                          marginTop: 10,
-                        }}>
-                        <Text
-                          style={{
-                            textAlign: "center",
-                            color: "white",
-                            fontSize: 16,
-                            padding: 8,
-                          }}>
-                          Pay Now
-                        </Text>
-                      </TouchableOpacity>)}
+                    </TouchableOpacity>
+                  )}
                   {payError == true ? (
                     <>
-                      <View style={[styles.boxQuestion, { marginTop: 30 }]}>
+                      <View style={[styles.boxQuestion, {marginTop: 30}]}>
                         {/* <WebView
           source={{ uri: payurl }}
           // onNavigationStateChange={onNavigationStateChange}
@@ -1954,8 +2063,8 @@ const ChatScreen2 = (props) => {
          </View> */}
                         <Text
                           style={{
-                            fontFamily: "Mukta-Regular",
-                            color: "black",
+                            fontFamily: 'Mukta-Regular',
+                            color: 'black',
                             fontSize: 18,
                             marginHorizontal: 10,
                             padding: 10,
@@ -1967,7 +2076,7 @@ const ChatScreen2 = (props) => {
                   ) : null}
                   {paynow == true ? (
                     <>
-                      <View style={[styles.boxQuestion, { marginTop: 30 }]}>
+                      <View style={[styles.boxQuestion, {marginTop: 30}]}>
                         {/* <WebView
           source={{ uri: payurl }}
           // onNavigationStateChange={onNavigationStateChange}
@@ -1979,32 +2088,32 @@ const ChatScreen2 = (props) => {
                           style={{
                             width: 40,
                             height: 40,
-                            justifyContent: "center",
-                            alignSelf: "center",
+                            justifyContent: 'center',
+                            alignSelf: 'center',
                             marginTop: -15,
-                            backgroundColor: "#055e00",
+                            backgroundColor: '#055e00',
                             borderRadius: 50,
                           }}>
                           <Text
                             style={{
-                              textAlign: "center",
-                              alignSelf: "center",
+                              textAlign: 'center',
+                              alignSelf: 'center',
                               fontSize: 20,
-                              color: "white",
+                              color: 'white',
                             }}>
                             ✓
                           </Text>
                         </View>
                         <Text
                           style={{
-                            fontFamily: "Mukta-Regular",
-                            color: "black",
+                            fontFamily: 'Mukta-Regular',
+                            color: 'black',
                             fontSize: 18,
                             marginHorizontal: 10,
                             padding: 10,
                           }}>
                           Success! Thank you for allowing us to assist with your
-                          car insurance.{" "}
+                          car insurance.{' '}
                         </Text>
                       </View>
                       {/*<View style={[styles.boxQuestion]}>
@@ -2055,34 +2164,33 @@ const ChatScreen2 = (props) => {
                           the policy anytime.
                         </Text>
                       </View>*/}
-                      {biguri == "" ? (
-                        <LoaderUI />
-                       ) : null
+                      {
+                        biguri == '' ? <LoaderUI /> : null
                         // (
-                      //   <TouchableOpacity
-                      //     style={{
-                      //       justifyContent: "center",
-                      //       backgroundColor: "#fa7a72",
-                      //       marginHorizontal: 40,
-                      //       borderRadius: 10,
-                      //       marginVertical: 20,
-                      //       marginBottom: 30,
-                      //     }}
-                      //     onPress={() => {
-                      //       // downloadFile();
-                      //       actualDownload();
-                      //     }}>
-                      //     <Text
-                      //       style={{
-                      //         color: "white",
-                      //         textAlign: "center",
-                      //         padding: 10,
-                      //       }}>
-                      //       Get Your Policy
-                      //     </Text>
-                      //   </TouchableOpacity>
-                      // )
-                        }
+                        //   <TouchableOpacity
+                        //     style={{
+                        //       justifyContent: "center",
+                        //       backgroundColor: "#fa7a72",
+                        //       marginHorizontal: 40,
+                        //       borderRadius: 10,
+                        //       marginVertical: 20,
+                        //       marginBottom: 30,
+                        //     }}
+                        //     onPress={() => {
+                        //       // downloadFile();
+                        //       actualDownload();
+                        //     }}>
+                        //     <Text
+                        //       style={{
+                        //         color: "white",
+                        //         textAlign: "center",
+                        //         padding: 10,
+                        //       }}>
+                        //       Get Your Policy
+                        //     </Text>
+                        //   </TouchableOpacity>
+                        // )
+                      }
                       {/* <View style={styles.BotQuestion}>
         <Text style={styles.BotText}>
           Finally, how would you like to receive your copy of your insurance policy?
@@ -2125,45 +2233,50 @@ const ChatScreen2 = (props) => {
                 </>
               ) : null}
             </>
-          ) : isPlanLoaded !== "" ? (<><View style={[styles.BotQuestion,{flexDirection:"column",height:"auto"}]}>
-            <Text style={[styles.BotText]}>
-              {isPlanLoaded}
-            </Text>
-            {!isAPIError && (<View style={{ padding: 8,alignItems:"center"}}>
-              <Bubbles size={3} color="#ff8c69">
-                <ActivityIndicator />
-              </Bubbles>
-            </View>)
-            }
-          </View>
-
-          </>) : null}
+          ) : isPlanLoaded !== '' ? (
+            <>
+              <View
+                style={[
+                  styles.BotQuestion,
+                  {flexDirection: 'column', height: 'auto'},
+                ]}>
+                <Text style={[styles.BotText]}>{isPlanLoaded}</Text>
+                {!isAPIError && (
+                  <View style={{padding: 8, alignItems: 'center'}}>
+                    <Bubbles size={3} color="#ff8c69">
+                      <ActivityIndicator />
+                    </Bubbles>
+                  </View>
+                )}
+              </View>
+            </>
+          ) : null}
         </View>
       </ScrollView>
       {isQuestion === true ? (
         <>
-          <View style={{ paddingTop: 70 }}>
+          <View style={{paddingTop: 70}}>
             <TouchableOpacity
               onPress={() => {
-                setplanRange("No");
+                setplanRange('No');
                 setIsQuestion(false);
               }}
               style={{
-                backgroundColor: "#fa7973",
+                backgroundColor: '#fa7973',
                 height: 35,
-                justifyContent: "center",
-                position: "absolute",
+                justifyContent: 'center',
+                position: 'absolute',
                 bottom: 0,
-                width: "100%",
+                width: '100%',
               }}>
               <Text
                 style={{
-                  color: "white",
-                  textAlign: "center",
-                  fontWeight: "bold",
+                  color: 'white',
+                  textAlign: 'center',
+                  fontWeight: 'bold',
                   fontSize: 16,
-                  alignSelf: "center",
-                  justifyContent: "center",
+                  alignSelf: 'center',
+                  justifyContent: 'center',
                 }}>
                 No
               </Text>
@@ -2171,26 +2284,25 @@ const ChatScreen2 = (props) => {
 
             <TouchableOpacity
               onPress={() => {
-
-                setplanRange("Yes");
+                setplanRange('Yes');
                 setIsQuestion(false);
               }}
               style={{
-                backgroundColor: "#fa7973",
+                backgroundColor: '#fa7973',
                 height: 35,
-                justifyContent: "center",
-                position: "absolute",
+                justifyContent: 'center',
+                position: 'absolute',
                 bottom: 37,
-                width: "100%",
+                width: '100%',
               }}>
               <Text
                 style={{
-                  color: "white",
-                  textAlign: "center",
-                  fontWeight: "bold",
+                  color: 'white',
+                  textAlign: 'center',
+                  fontWeight: 'bold',
                   fontSize: 16,
-                  alignSelf: "center",
-                  justifyContent: "center",
+                  alignSelf: 'center',
+                  justifyContent: 'center',
                 }}>
                 Yes
               </Text>
@@ -2224,22 +2336,22 @@ const ChatScreen2 = (props) => {
 
 const styles = StyleSheet.create({
   BotQuestion: {
-    backgroundColor: "#0e0551",
-    width: "80%",
+    backgroundColor: '#0e0551',
+    width: '80%',
     paddingHorizontal: 10,
     borderRadius: 20,
     marginVertical: 8,
     borderTopLeftRadius: 5,
   },
   BotText: {
-    color: "white",
+    color: 'white',
     fontSize: 14,
     paddingHorizontal: 5,
     paddingVertical: 8,
-    fontFamily: "Mukta-Regular",
+    fontFamily: 'Mukta-Regular',
   },
   boxQuestion: {
-    backgroundColor: "#f2f2f2",
+    backgroundColor: '#f2f2f2',
     marginVertical: 10,
     borderRadius: 8,
     marginHorizontal: 15,
@@ -2247,40 +2359,40 @@ const styles = StyleSheet.create({
   boxQText: {
     paddingVertical: 15,
     paddingHorizontal: 8,
-    color: "#0e0551",
+    color: '#0e0551',
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   row: {
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   answerBox: {
     // flexDirection:'row',
     marginHorizontal: 10,
-    backgroundColor: "#f1f2f2",
+    backgroundColor: '#f1f2f2',
     borderRadius: 20,
     borderTopRightRadius: 5,
     marginVertical: 8,
     minWidth: 80,
   },
   PlanText: {
-    fontWeight: "bold",
-    color: "#0e0551",
+    fontWeight: 'bold',
+    color: '#0e0551',
     fontSize: 28,
-    fontFamily: "Mukta-Bold",
-    textAlign: "center",
+    fontFamily: 'Mukta-Bold',
+    textAlign: 'center',
   },
   answerText: {
-    alignSelf: "center",
+    alignSelf: 'center',
     paddingHorizontal: 10,
     paddingVertical: 8,
-    color: "#0e0551",
+    color: '#0e0551',
   },
   FormHeading: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginHorizontal: 10,
-    width: "70%",
+    width: '70%',
     marginTop: 40,
   },
   FormContainer: {
@@ -2293,52 +2405,52 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     borderRadius: 5,
     paddingVertical: 2,
-    borderColor: "#ddd",
-    backgroundColor: "#eee",
+    borderColor: '#ddd',
+    backgroundColor: '#eee',
     marginHorizontal: 20,
   },
   labelText: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
     fontSize: 14,
-    color: "#474747",
+    color: '#474747',
   },
   formView: {
     marginVertical: 8,
   },
   checkbox: {
-    backgroundColor: "red",
+    backgroundColor: 'red',
     width: 20,
     height: 20,
     borderRadius: 50,
-    alignSelf: "center",
+    alignSelf: 'center',
     marginLeft: 20,
   },
   checkboxRight: {
-    backgroundColor: "green",
+    backgroundColor: 'green',
     width: 20,
     height: 20,
     borderRadius: 50,
-    alignSelf: "center",
+    alignSelf: 'center',
     marginLeft: 20,
   },
 });
 ChatScreen2.navigationOptions = (navigationData) => {
   return {
     headerTitle: () => (
-      <View style={{ flexDirection: "row" }}>
+      <View style={{flexDirection: 'row'}}>
         <Image
           source={BobImg}
           style={{
             height: 30,
             width: 30,
-            backgroundColor: "#d4f4fc",
+            backgroundColor: '#d4f4fc',
             borderRadius: 50,
             marginRight: 5,
             marginLeft: -5,
           }}
         />
 
-        <Text style={{ alignSelf: "center" }}>Bob</Text>
+        <Text style={{alignSelf: 'center'}}>Bob</Text>
       </View>
     ),
   };

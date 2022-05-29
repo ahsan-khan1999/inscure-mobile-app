@@ -4,6 +4,7 @@ import imageUpload from './imageUpload';
 import UIImageUpload from './UIImageUpload';
 import extract from '../api/Extract';
 import {Alert} from 'react-native';
+import axios from 'axios';
 
 export default function ImageUploadModal({
   sendStateToParent,
@@ -21,100 +22,135 @@ export default function ImageUploadModal({
   function toggleModal() {
     setUploadImageURL('');
     setImageURL('');
+
     toggleModalVisible();
   }
+
   function saveFn() {
+    // alert('at func');
     toggleLoader();
-    let imgData = new FormData();
-    imgData.append('files', {
-      // @ts-ignore
-      // modelName:"Vehicle_Card_Front",
-      policyNo: '1234',
-      docCategory: '10001',
-      docContent: imageURL,
-      // file:uploadURL
-      // uri: uploadURL,
-      // type: `image/${imageType}`,
-      // name: `upload.${imageType}`
-    });
-    const file = {
-      uri: uploadURL,
-      name: 'Vehical.jpeg',
-      type: 'image/jpg',
-    };
-    let formdata = new FormData();
-    formdata.append('files', file);
-    formdata.append('endpoint','insurecue-proj')
-    // formdata.append('modelName', data);
-    // formdata.append('userName', 'tfai_trainer');
-
-    var requestOptions = {
-      method: 'POST',
-      body: formdata,
-      redirect: 'follow',
-    };
-    var resultdata;
+    // let imgData = new FormData();
+    // imgData.append('files', {
+    // @ts-ignore
+    // modelName:"Vehicle_Card_Front",
+    // policyNo: '1234',
+    // docCategory: '10001',
+    // docContent: imageURL,
+    // file:uploadURL
+    // uri: uploadURL,
+    // type: `image/${imageType}`,
+    // name: `upload.${imageType}`
+    // });
     if (data) {
-      console.log(requestOptions,"requestOptions",data);
-      console.log(
-        'this is ocr api url https://ocr.techforce.ai/api/operator_roi/InsureCue_Extract_Data',
-      );
-      fetch(
-        'https://ocr.techforce.ai/api/operator_roi/InsureCue_Extract_Data',
-        requestOptions,
-      )
-        // fetch("https://insurecueapi.techforce.ai/insurecue/postInsureStaging", requestOptions)
-
-        // .then(response => response.text())
-        .then((res) => console.log(res, 'data'))
-        .then(async (result) => {
-          console.log(result, 'polo'), (resultdata = await JSON.parse(result));
-          sendStateToParent(resultdata);
-          toggleLoader();
-          toggleModal();
-        })
-        .catch((error) => {
-          Alert.alert('Alerts', error.toString());
-          console.log('error', error);
-          toggleLoader();
-        });
-    } else {
-      fetch(
-        `https://insurecuebotbot.techforce.ai/api/aws/upload`,
-        {
-          //  fetch(`https://insurecuebotbot.techforce.ai/api/aws/upload`, {
-
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Api-Key': '3PeZr8Hc1gFbVI2nUe9dT',
-            'Partner-Id': 'DOWALI',
-          },
-          body: JSON.stringify({
+      console.log('Hello this got exectuyed', imageURL);
+      let formdata = new FormData();
+      formdata.append('files', imageURL);
+      formdata.append('endpoint', 'insurecue-proj');
+      try {
+        axios
+          .post(
+            'https://insurecuebotbot.techforce.ai/api/aws/upload',
             formdata,
-          }),
-        },
-      )
-        .then((url) => {
-          console.log(url, 'fomrdata');
-          if (typeof url.url === 'string') {
-            alert('Image Uploaded!');
-            sendStateToParent(url);
-            toggleLoader();
-            toggleModal();
-            // toggleModal();
-          } else {
-            console.log({url});
-            toggleLoader();
-            alert('Failed to Upload, Will get back to you shortly');
-          }
-        })
-        .catch((er) => {
-          er.response, toggleLoader();
-          alert('Failed to Upload');
-          console.log(er, 'error');
-        });
+            {
+              headers: {
+                'encoding-type': 'multipart/form-data',
+              },
+            },
+          )
+          .then((response) => {
+            // console.log('This is responce', response);
+            console.log(response, 'response data');
+
+            if (response) {
+              setUploadImageURL(response?.data?.Location);
+
+              axios
+                .post(
+                  'https://insurecueocr.techforce.ai/api/operator_roi/InsureCue_Extract_Data',
+                  JSON.stringify(response?.data?.Location),
+                  {
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                  },
+                )
+                .then((response) => {
+                  response.json().then((res) => {
+                    console.log('This is response from extract data api', res);
+                    sendStateToParent(res);
+                    toggleLoader();
+                    toggleModal();
+                  });
+                })
+                .catch((error) => {
+                  Alert.alert('Alert', error.toString());
+                  console.log('error', error);
+                  toggleLoader();
+                });
+            }
+          });
+      } catch (e) {
+        console.log('This is errorrrrr', e);
+      }
+
+      // console.log(
+      //   'this is ocr api url https://insurecueocr.techforce.ai/api/operator_roi/InsureCue_Extract_Data',
+      // );
+      // fetch(
+      //   'https://insurecueocr.techforce.ai/api/operator_roi/InsureCue_Extract_Data',
+      //   requestOptions,
+      // )
+      //   .then((response) => {
+      //     response.json().then((res) => {
+      //       console.log('This is hello response',res);
+      //       sendStateToParent(res);
+      //       toggleLoader();
+      //       toggleModal();
+      //     });
+      //   })
+      //   .catch((error) => {
+      //     Alert.alert('Alert', error.toString());
+      //     console.log('error', error);
+      //     toggleLoader();
+      //   });
     }
+
+    // else {
+    //   fetch(
+    //     `https://insurance.awnic.com/InsureApiUAT/API/motor/motorUploadDocument`,
+    //     {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //         'Api-Key': '3PeZr8Hc1gFbVI2nUe9dT',
+    //         'Partner-Id': 'DOWALI',
+    //       },
+    //       body: JSON.stringify({
+    //         formdata,
+    //       }),
+    //     },
+    //   )
+    //     .then((url) => {
+    //       console.log(url, 'fomrdata');
+    //       if (typeof url.url === 'string') {
+    //         alert('Image Uploaded!');
+    //         sendStateToParent(url);
+    //         toggleLoader();
+    //         toggleModal();
+    //         // toggleModal();
+    //       } else {
+    //         console.log({url});
+    //         toggleLoader();
+    //         alert('Failed to Upload, Will get back to you shortly');
+    //       }
+    //     })
+    //     .catch((er) => {
+    //       er.response, toggleLoader();
+    //       alert('Failed to Upload');
+    //       console.log(er, 'error');
+    //     });
+    // }
+
     // imageUpload(formdata)
     //   .then(url => {
     //     console.log(url,'fomrdata')
@@ -135,7 +171,6 @@ export default function ImageUploadModal({
     //   alert("Failed to Upload");
     // });
   }
-
   return (
     <>
       <UIImageUpload
