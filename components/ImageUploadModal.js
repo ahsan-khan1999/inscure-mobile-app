@@ -63,11 +63,14 @@ export default function ImageUploadModal({
 
             if (response) {
               setUploadImageURL(response?.data?.Location);
-
               axios
                 .post(
                   'https://insurecueocr.techforce.ai/api/operator_roi/InsureCue_Extract_Data',
-                  JSON.stringify(response?.data?.Location),
+                  {
+                    file: response?.data?.Location,
+                    modelName: 'Vehicle_License_Card_Front',
+                    userName: 'tfai_trainer',
+                  },
                   {
                     headers: {
                       'Content-Type': 'application/json',
@@ -75,12 +78,9 @@ export default function ImageUploadModal({
                   },
                 )
                 .then((response) => {
-                  response.json().then((res) => {
-                    console.log('This is response from extract data api', res);
-                    sendStateToParent(res);
-                    toggleLoader();
-                    toggleModal();
-                  });
+                  sendStateToParent(response?.data);
+                  toggleLoader();
+                  toggleModal();
                 })
                 .catch((error) => {
                   Alert.alert('Alert', error.toString());
