@@ -85,6 +85,7 @@ const ChatScreen2 = (props) => {
   const [fidelityPolicy, setfidelityPolicy] = React.useState('');
   const [userData, setuserData] = React.useState('');
   const [vehicleTypeMaster, setVehicleTypeMaster] = React.useState('');
+  console.log(VehicleFront, VehicleBack, 'VehicleBack');
   const [isPlanLoaded, setIsPlanLoaded] = React.useState('');
   const [vehicleModelData, setVehicleModelData] = React.useState('');
   const [awnicRawData, setAwnicRawData] = React.useState('');

@@ -14,6 +14,7 @@ export default function ImageUploadModal({
   data,
 }) {
   const [modalVisible, toggleModalVisible] = useLoader();
+  console.log(data,"data");
   const [loader, toggleLoader] = useLoader();
   const [imageURL, setImageURL] = React.useState('');
   const [uploadURL, setUploadImageURL] = React.useState('');
@@ -68,7 +69,7 @@ export default function ImageUploadModal({
                   'https://insurecueocr.techforce.ai/api/operator_roi/InsureCue_Extract_Data',
                   {
                     file: response?.data?.Location,
-                    modelName: 'Vehicle_License_Card_Front',
+                    modelName: data,
                     userName: 'tfai_trainer',
                   },
                   {
