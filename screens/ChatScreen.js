@@ -54,6 +54,7 @@ const ChatScreen = (props) => {
   const [carImage3, setcarImage3] = React.useState('');
   const [carImage4, setcarImage4] = React.useState('');
   const [TestResult, setTesResult] = React.useState(''); //false
+  console.log(TestResult, 'TestResult');
   const [Carverified, setCarVerified] = React.useState(false);
   const [formSubmitted, setFormSubmitted] = React.useState(false);
   const [isQuestion, setIsQuestion] = React.useState(false);
@@ -146,7 +147,7 @@ const ChatScreen = (props) => {
         console.log('inside testing');
         setIsLoading('Please wait while we are fetching car valuation');
         fetchVehicleSpecs().then((r) =>
-          console.log('this is vehicle spec in test result effect'),
+          console.log('this is vehicle spec in test result effect', r),
         );
       }
       // props.navigation.navigate('Chat2')
@@ -681,12 +682,12 @@ const ChatScreen = (props) => {
   async function fetchVehicleSpecs() {
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
-
+    console.log(vehicleBack, 'vehicleBack');
     var raw = JSON.stringify({
       data: [
         {
-          chassis_number: vehicleBack?.ChasisNumber,
-          year: vehicleBack?.ModelNumber,
+          chassis_number: vehicleBack?.ChasisNumber?.replace(' ', ''),
+          year: vehicleBack?.ModelNumber?.replace(' ', ''),
         },
       ],
     });
@@ -703,18 +704,28 @@ const ChatScreen = (props) => {
 
     var config1 = {
       method: 'post',
-      url: 'https://ocr.techforce.ai/api/operator_roi/InsureCue_vehicleSpecs/',
+      url:
+        'https://insurecueocr.techforce.ai/api/operator_roi/InsureCue_vehicleSpecs/',
       headers: {
         'Content-Type': 'application/json',
       },
       data: raw,
       timeout: 90000,
     };
-
-    axios(config1)
+    console.log(raw, 'vraw');
+    axios
+      .post(
+        'https://insurecueocr.techforce.ai/api/operator_roi/InsureCue_vehicleSpecs/',
+        raw,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      )
       .then(function (response) {
         // alert('this is inside first promise');
-        console.log('this is response ', response);
+        console.log('this is response hekko ', response);
 
         console.log('this is type of resp', response.data);
         // alert(response.data.Output.vehicle_type);
@@ -730,47 +741,70 @@ const ChatScreen = (props) => {
             },
           ],
         });
+        const userDict = JSON.stringify({
+          email: 'admin@techforce.ai',
+          password: 'Admin123',
+        });
         console.log('this is second raw', raw1);
-        var config2 = {
-          method: 'post',
-          url: 'https://ocr.techforce.ai/api/operator_roi/InsureCue_carvalues/',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          data: raw1,
-          timeout: 90000,
-        };
-        axios(config2)
-          .then(function (response) {
-            let r = response.data.Output.price;
-            console.log('this is the range ', r);
-            let s = r.split('-');
-            console.log('this is values array', s);
-            // alert(response.data.Output.price)
-            if (s.length > 1) {
-              let t = s.map(function (c) {
-                return Number(c.replace(/[^\d.]/g, ''));
-              });
-              console.log('this is car values ', t);
-              setInsRange(t);
-              setIsLoading('');
-              setshowChat2(true);
-              // alert('inside   car value out 2')
-              console.log('this is insurenace range ', insRange);
-            } else {
-              setInsRange([]);
-              setIsLoading('Unable to fetch car valuation');
-              setIsAPIError(true);
-              setshowChat2(true);
-              // alert('inside   car value out 3')
-            }
+
+        axios
+          .post('http://150.136.7.55:8055/auth/login', userDict, {
+            headers: {
+              'Content-Type': 'application/json',
+            },
           })
-          .catch(function (error) {
-            console.log(error);
+          .then((res) => {
+            console.log(res,"res is here");
+            console.log(res?.data?.data?.access_token, 'res is here from director login accesss token');
+            
+            // let response = JSON.parse(res);
+            // console.log(response?.data,"access token json parse");
+            const headers = {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${res?.data?.data?.access_token}`,
+            };
+            console.log(headers, 'parsed response headers',raw1);
+            axios
+              .get(
+                `http://150.136.7.55:8055/items/tf_insurcue_carvalues?filter={}&limit=10`,
+                {
+                  headers: headers,
+                },
+              )
+              .then(function (response) {
+                console.log('this is the range ', response);
+                let r = response.data.Output.price;
+                let s = r.split('-');
+                console.log('this is values array', s);
+                // alert(response.data.Output.price)
+                if (s.length > 1) {
+                  let t = s.map(function (c) {
+                    return Number(c.replace(/[^\d.]/g, ''));
+                  });
+                  console.log('this is car values ', t);
+                  setInsRange(t);
+                  setIsLoading('');
+                  setshowChat2(true);
+                  // alert('inside   car value out 2')
+                  console.log('this is insurenace range ', insRange);
+                } else {
+                  setInsRange([]);
+                  setIsLoading('Unable to fetch car valuation');
+                  setIsAPIError(true);
+                  setshowChat2(true);
+                  // alert('inside   car value out 3')
+                }
+              })
+              .catch(function (error) {
+                console.log(error, 'error is here at car value');
+              });
+          })
+          .catch((e) => {
+            console.log(e, 'error from director login');
           });
       })
       .catch(function (error) {
-        console.log(error);
+        console.log(error, 'error is here dude');
       });
 
     // var config2 = {
@@ -1758,7 +1792,10 @@ const ChatScreen = (props) => {
                                       title: 'Back',
                                       background: 'no',
                                       color: imageUrl ? 'yes' : 'no',
+                                      // data: 'Driving_License_Card_Back',
                                       data: '',
+                                      // Driving_License_Card_Front
+                                      // vehicle_License_back_card
                                     }}
                                   />
                                 </Text>
@@ -2198,7 +2235,8 @@ const ChatScreen = (props) => {
                         </>
                       ) : null
                     ) : null}
-                    {Carverified === true && getYear() < time ? (
+                    {/* Carverified === true && getYear() < time  */}
+                    {Carverified === true || !Carverified ? (
                       <>
                         <View style={styles.BotQuestion}>
                           <Text style={styles.BotText}>

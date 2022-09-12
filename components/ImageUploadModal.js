@@ -14,7 +14,7 @@ export default function ImageUploadModal({
   data,
 }) {
   const [modalVisible, toggleModalVisible] = useLoader();
-  console.log(data,"data");
+  console.log(data, 'data');
   const [loader, toggleLoader] = useLoader();
   const [imageURL, setImageURL] = React.useState('');
   const [uploadURL, setUploadImageURL] = React.useState('');
@@ -114,6 +114,34 @@ export default function ImageUploadModal({
       //     console.log('error', error);
       //     toggleLoader();
       //   });
+    } else {
+      let formdata = new FormData();
+      formdata.append('files', imageURL);
+      formdata.append('endpoint', 'insurecue-proj');
+      try {
+        axios
+          .post(
+            'https://insurecuebotbot.techforce.ai/api/aws/upload',
+            formdata,
+            {
+              headers: {
+                'encoding-type': 'multipart/form-data',
+              },
+            },
+          )
+          .then((response) => {
+            sendStateToParent(response?.data);
+
+            // console.log('This is responce', response);
+            console.log(response, 'response data');
+            toggleLoader();
+            toggleModal();
+          });
+      } catch (e) {
+        console.log('This is errorrrrr', e);
+        toggleLoader();
+        toggleModal();
+      }
     }
 
     // else {
